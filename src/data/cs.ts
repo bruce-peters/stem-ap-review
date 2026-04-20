@@ -1,3 +1,2 @@
-import type { Topic } from "@/types";
-const cs: Topic[] = [];
-export default cs;
+import { csTopics } from "./cs/index";
+export default csTopics;

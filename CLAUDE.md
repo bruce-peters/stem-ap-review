@@ -452,3 +452,205 @@ fluid-flow-qualitative         | Laminar vs. Turbulent Flow (qualitative)       
 ```
 
 ---
+
+## Content: AP Computer Science A (2025-26 Exam)
+
+### Schema Note for CS
+- `formula` field: Java syntax snippets, NOT LaTeX — do not wrap in KaTeX
+- Add `codeSnippet?: string` field for 5–15 line Java examples (rendered in `<pre><code>`)
+- Tags should include which new 4-unit bucket each topic belongs to: `"new-u1"` | `"new-u2"` | `"new-u3"` | `"new-u4"`
+- Exam restructured from 10 units to 4 units for 2025-26; app uses the old unit structure for review clarity
+- **Unit 9 (Inheritance/Polymorphism) was officially removed — do not include it anywhere**
+- Old-to-new mapping: old U1+U2 → new-u1 | old U3+U4 → new-u2 | old U5 → new-u3 | old U6+U7+U8+U10 → new-u4
+- Exam format: 42 MC questions (55%), 4 FRQs (45%)
+
+### File Structure for CS
+
+```
+src/data/cs/
+  index.ts          # re-exports all units, exports csUnits string[]
+  u1-primitive-types.ts
+  u2-using-objects.ts
+  u3-boolean-if-statements.ts
+  u4-iteration.ts
+  u5-writing-classes.ts
+  u6-array.ts
+  u7-arraylist.ts
+  u8-2d-array.ts
+  u10-recursion.ts
+```
+
+### FRQ Pattern Reference
+
+```
+FRQ 1: Methods and control structures — write/modify methods using loops, if/else, and return values
+FRQ 2: Class writing — write a complete class from a spec (fields, constructor, methods)
+FRQ 3: ArrayList operations only — no arrays; add/remove/traverse ArrayList
+FRQ 4: 2D array traversal and processing — nested loops, row/column operations
+```
+
+### Content Inventory — AP Computer Science A
+
+Format: `ID | Name | Key syntax / method | Tags | FRQ relevance`
+
+---
+
+### Unit 1: Primitive Types
+Maps to new-u1 (part of "Using Objects and Methods")
+
+```
+int-double-boolean             | Primitive Data Types (int, double, boolean)       | int x = 5; double d = 3.14; boolean b = true;                                | new-u1, MCQ frequent
+variable-declaration           | Variable Declaration and Initialization           | int x = 0; double y;                                                          | new-u1, MCQ frequent
+arithmetic-operators           | Arithmetic Operators                              | + - * / %                                                                     | new-u1, MCQ frequent | FRQ 1
+integer-division               | Integer Division and Truncation                   | 7 / 2 == 3                                                                    | new-u1, MCQ frequent
+modulo-operator                | Modulo Operator                                   | 7 % 2 == 1                                                                    | new-u1, MCQ frequent | FRQ 1
+casting                        | Casting (widening and narrowing)                  | (int) 3.9 == 3; (double) 7 / 2 == 3.5                                        | new-u1, MCQ frequent
+compound-assignment            | Compound Assignment Operators                     | x += 1; x -= 1; x *= 2; x /= 2; x %= 2;                                     | new-u1, MCQ frequent
+increment-decrement            | Increment and Decrement Operators                 | x++; x--; ++x; --x;                                                           | new-u1, MCQ frequent
+final-constant                 | Named Constants (final)                           | final int MAX = 100;                                                           | new-u1, MCQ frequent
+```
+
+---
+
+### Unit 2: Using Objects
+Maps to new-u1 (part of "Using Objects and Methods")
+
+```
+object-instantiation           | Object Instantiation with new                     | ClassName obj = new ClassName(args);                                          | new-u1, MCQ frequent | FRQ 2
+calling-instance-methods       | Calling Instance Methods (dot notation)           | obj.methodName(args)                                                          | new-u1, MCQ frequent | FRQ 1, 2
+string-class                   | String Class and Immutability                     | String s = "hello";                                                           | new-u1, MCQ frequent | FRQ 1
+string-length                  | String.length()                                   | s.length()                                                                    | new-u1, MCQ frequent
+string-substring               | String.substring(i) and substring(i, j)          | s.substring(1, 4)                                                             | new-u1, MCQ frequent | FRQ 1
+string-indexof                 | String.indexOf(str)                               | s.indexOf("lo")                                                               | new-u1, MCQ frequent
+string-equals                  | String.equals() and equalsIgnoreCase()            | s.equals(t); s.equalsIgnoreCase(t)                                            | new-u1, MCQ frequent | FRQ 1
+string-compareto               | String.compareTo()                                | s.compareTo(t) < 0 means s comes first                                        | new-u1, MCQ frequent
+string-concatenation           | String Concatenation and Mixed-Type concat        | "Score: " + score                                                             | new-u1, MCQ frequent
+math-class                     | Math Class Static Methods                        | Math.abs(x); Math.pow(b,e); Math.sqrt(x); Math.random()                      | new-u1, MCQ frequent | FRQ 1
+null-reference                 | null References and NullPointerException          | String s = null; s.length() throws NPE                                        | new-u1, MCQ frequent
+wrapper-classes                | Wrapper Classes and Autoboxing                    | Integer.parseInt("5"); Integer x = 5; int y = x;                             | new-u1, MCQ frequent
+pass-by-value                  | Pass-by-Value in Java (primitives vs. references) |                                                                               | new-u1, MCQ frequent | FRQ 2
+```
+
+---
+
+### Unit 3: Boolean Expressions and if Statements
+Maps to new-u2 (part of "Selection and Iteration")
+
+```
+boolean-expressions            | Boolean Expressions and Relational Operators      | x > 5; x == 5; x != 5; x >= 5; x <= 5                                       | new-u2, MCQ frequent | FRQ 1
+logical-operators              | Logical Operators (&&, ||, !)                    | x > 0 && x < 10; !done                                                       | new-u2, MCQ frequent | FRQ 1
+short-circuit-eval             | Short-Circuit Evaluation                          | false && expr (expr not evaluated)                                            | new-u2, MCQ frequent
+if-else                        | if / else if / else Statements                    | if (cond) { } else if (cond2) { } else { }                                   | new-u2, MCQ frequent | FRQ 1
+nested-if                      | Nested if Statements                              |                                                                               | new-u2, MCQ frequent | FRQ 1
+demorgan-law                   | De Morgan's Law                                   | !(A && B) == (!A || !B); !(A || B) == (!A && !B)                             | new-u2, MCQ frequent
+equals-vs-doubleequals         | .equals() vs == for Object Comparison            | s.equals(t) checks value; s == t checks reference                             | new-u2, MCQ frequent | FRQ 1
+compound-boolean               | Compound Boolean Expressions (truth tables)       |                                                                               | new-u2, MCQ frequent
+```
+
+---
+
+### Unit 4: Iteration
+Maps to new-u2 (part of "Selection and Iteration")
+
+```
+while-loop                     | while Loop                                        | while (cond) { }                                                              | new-u2, MCQ frequent | FRQ 1
+for-loop                       | for Loop (standard)                               | for (int i = 0; i < n; i++) { }                                               | new-u2, MCQ frequent | FRQ 1
+for-each-loop                  | for-each (Enhanced for) Loop                      | for (Type x : collection) { }                                                 | new-u2, MCQ frequent | FRQ 3
+do-while-loop                  | do-while Loop                                     | do { } while (cond);                                                          | new-u2, MCQ frequent
+nested-loops                   | Nested Loops                                      |                                                                               | new-u2, MCQ frequent | FRQ 4
+off-by-one-errors              | Off-by-One Errors                                 | i < n vs i <= n; fencepost problems                                           | new-u2, MCQ frequent
+string-traversal-loops         | String Traversal with Loops                       | for (int i = 0; i < s.length(); i++) { s.charAt(i); }                        | new-u2, MCQ frequent | FRQ 1
+loop-accumulators              | Loop Accumulators (sum, count, max, min)          |                                                                               | new-u2, MCQ frequent | FRQ 1, 3
+```
+
+---
+
+### Unit 5: Writing Classes
+Maps to new-u3 ("Class Creation")
+
+```
+class-anatomy                  | Class Declaration and Structure                   | public class Dog { }                                                          | new-u3, MCQ frequent | FRQ 2
+constructors                   | Constructors                                      | public Dog(String name) { this.name = name; }                                 | new-u3, MCQ frequent | FRQ 2
+instance-variables             | Instance Variables (private fields)               | private String name; private int age;                                         | new-u3, MCQ frequent | FRQ 2
+encapsulation                  | Encapsulation and Access Modifiers                | private fields, public methods                                                | new-u3, MCQ frequent
+getters-setters                | Accessor (getter) and Mutator (setter) Methods    | public String getName() { return name; } public void setName(String n) { }   | new-u3, MCQ frequent | FRQ 2
+static-vs-instance             | static vs. Instance Members                       | static int count; vs int count;                                               | new-u3, MCQ frequent
+this-keyword                   | The this Keyword                                  | this.name = name; this.value = value;                                         | new-u3, MCQ frequent | FRQ 2
+method-overloading             | Method Overloading (same name, different params)  |                                                                               | new-u3, MCQ frequent
+scope-local-instance           | Variable Scope: Local vs. Instance Variables      |                                                                               | new-u3, MCQ frequent
+tostring-method                | toString() Method Override                        | public String toString() { return "Dog: " + name; }                          | new-u3, MCQ frequent | FRQ 2
+```
+
+---
+
+### Unit 6: Array
+Maps to new-u4 (part of "Data Collections")
+
+```
+array-declaration              | Array Declaration and Initialization              | int[] arr = new int[5]; int[] arr = {1, 2, 3};                               | new-u4, MCQ frequent | FRQ 4
+array-indexing                 | Array Indexing and .length                        | arr[0]; arr[arr.length - 1]                                                   | new-u4, MCQ frequent | FRQ 4
+array-traversal-for            | Array Traversal with for Loop                     | for (int i = 0; i < arr.length; i++) { arr[i]; }                             | new-u4, MCQ frequent | FRQ 4
+array-traversal-foreach        | Array Traversal with for-each                     | for (int x : arr) { }                                                         | new-u4, MCQ frequent
+array-algorithms               | Array Algorithms (min, max, sum, average)         |                                                                               | new-u4, MCQ frequent | FRQ 4
+array-linear-search            | Linear Search in Arrays                           |                                                                               | new-u4, MCQ frequent | FRQ 4
+array-selection-sort           | Selection Sort                                    |                                                                               | new-u4, MCQ frequent | FRQ 4
+array-insertion-sort           | Insertion Sort                                    |                                                                               | new-u4, MCQ frequent | FRQ 4
+binary-search                  | Binary Search (array must be sorted)              |                                                                               | new-u4, MCQ frequent
+passing-arrays-methods         | Passing Arrays to Methods                         |                                                                               | new-u4, MCQ frequent | FRQ 4
+arrays-of-objects              | Arrays of Objects                                 | Dog[] dogs = new Dog[5];                                                      | new-u4, MCQ frequent
+```
+
+---
+
+### Unit 7: ArrayList + File I/O
+Maps to new-u4 (part of "Data Collections")
+
+```
+arraylist-declaration          | ArrayList Declaration and Initialization          | ArrayList<Integer> list = new ArrayList<>();                                  | new-u4, MCQ frequent | FRQ 3
+arraylist-add                  | ArrayList.add(val) and add(i, val)               | list.add(42); list.add(0, 99);                                                | new-u4, MCQ frequent | FRQ 3
+arraylist-get                  | ArrayList.get(i)                                  | list.get(2)                                                                   | new-u4, MCQ frequent | FRQ 3
+arraylist-set                  | ArrayList.set(i, val)                             | list.set(1, 10)                                                               | new-u4, MCQ frequent | FRQ 3
+arraylist-remove               | ArrayList.remove(i)                               | list.remove(0)                                                                | new-u4, MCQ frequent | FRQ 3
+arraylist-size                 | ArrayList.size()                                  | list.size()                                                                   | new-u4, MCQ frequent | FRQ 3
+arraylist-traversal            | ArrayList Traversal (for and for-each)            | for (int i = 0; i < list.size(); i++)                                         | new-u4, MCQ frequent | FRQ 3
+arraylist-remove-while         | Removing Elements While Traversing (iterate backwards or use index loop) |                                                              | new-u4, MCQ frequent | FRQ 3
+arraylist-algorithms           | ArrayList Algorithms (search, filter, transform)  |                                                                               | new-u4, MCQ frequent | FRQ 3
+file-scanner-reading           | File Reading with File and Scanner                | File f = new File("data.txt"); Scanner sc = new Scanner(f);                  | new-u4, MCQ frequent, new 2026 | FRQ 3
+scanner-methods                | Scanner Methods (nextInt, nextDouble, nextLine, hasNext, hasNextInt) | sc.nextLine(); sc.hasNext(); sc.nextInt();                   | new-u4, MCQ frequent, new 2026 | FRQ 3
+```
+
+---
+
+### Unit 8: 2D Array
+Maps to new-u4 (part of "Data Collections")
+
+```
+2d-array-declaration           | 2D Array Declaration and Initialization           | int[][] grid = new int[3][4]; int[][] g = {{1,2},{3,4}};                     | new-u4, MCQ frequent | FRQ 4
+2d-array-indexing              | 2D Array Indexing                                 | grid[row][col]                                                                | new-u4, MCQ frequent | FRQ 4
+2d-array-dimensions            | 2D Array Dimensions (.length and [0].length)      | grid.length (rows); grid[0].length (cols)                                     | new-u4, MCQ frequent | FRQ 4
+2d-row-traversal               | Row-Major Traversal (nested for loops)            | for (int r = 0; r < grid.length; r++) for (int c = 0; c < grid[r].length; c++) | new-u4, MCQ frequent | FRQ 4
+2d-col-traversal               | Column-Major Traversal                            |                                                                               | new-u4, MCQ frequent | FRQ 4
+2d-algorithms                  | 2D Array Algorithms (sum, max, count, search)     |                                                                               | new-u4, MCQ frequent | FRQ 4
+2d-passing-methods             | Passing 2D Arrays to Methods                      |                                                                               | new-u4, MCQ frequent | FRQ 4
+2d-array-of-objects            | 2D Arrays of Objects                              |                                                                               | new-u4, MCQ frequent
+```
+
+---
+
+### Unit 10: Recursion
+Maps to new-u4 (part of "Data Collections")
+
+```
+recursion-base-case            | Base Case in Recursion                            |                                                                               | new-u4, MCQ frequent
+recursion-recursive-case       | Recursive Case and Progress Toward Base Case      |                                                                               | new-u4, MCQ frequent | FRQ 1
+recursion-call-stack           | Tracing the Call Stack                            |                                                                               | new-u4, MCQ frequent | FRQ 1
+recursion-vs-iterative         | Recursive vs. Iterative Solutions                 |                                                                               | new-u4, MCQ frequent
+recursion-factorial            | Recursive Factorial                               | return n == 0 ? 1 : n * factorial(n - 1);                                    | new-u4, MCQ frequent | FRQ 1
+recursion-fibonacci            | Recursive Fibonacci                               | return fib(n-1) + fib(n-2);                                                   | new-u4, MCQ frequent | FRQ 1
+recursion-linear-search        | Recursive Linear Search                           |                                                                               | new-u4, MCQ frequent
+recursion-binary-search        | Recursive Binary Search                           |                                                                               | new-u4, MCQ frequent | FRQ 1
+merge-sort                     | Merge Sort (divide and conquer, recursive)        |                                                                               | new-u4, MCQ frequent
+
+```
+
+---

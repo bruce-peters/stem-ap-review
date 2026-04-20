@@ -6,6 +6,7 @@ export type Topic = {
   tags: string[];
   summary: string;
   formula?: string;
+  codeSnippet?: string;
   description: string;
   steps?: string[];
   examples?: { problem: string; solution: string }[];

@@ -2,6 +2,7 @@ import type { Topic } from "@/types";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Math from "@/components/Math";
+import CodeBlock from "@/components/CodeBlock";
 import { Star } from "lucide-react";
 
 const TAG_COLORS: Record<string, string> = {
@@ -17,6 +18,7 @@ interface TopicCardProps {
   onClick: () => void;
   isReviewed?: boolean;
   isStarred?: boolean;
+  isCS?: boolean;
   onToggleStarred?: (e: React.MouseEvent) => void;
 }
 
@@ -35,13 +37,22 @@ function renderInline(text: string) {
   });
 }
 
-export default function TopicCard({ topic, onClick, isReviewed, isStarred, onToggleStarred }: TopicCardProps) {
+export default function TopicCard({
+  topic,
+  onClick,
+  isReviewed,
+  isStarred,
+  isCS,
+  onToggleStarred,
+}: TopicCardProps) {
   return (
     <Card
       className={cn(
         "cursor-pointer border-border bg-card hover:bg-accent/40 transition-colors duration-150 flex flex-col gap-0",
         isReviewed && "border-green-600 bg-green-950/30 hover:bg-green-900/20",
-        isStarred && !isReviewed && "border-amber-600 bg-amber-950/20 hover:bg-amber-900/20"
+        isStarred &&
+          !isReviewed &&
+          "border-amber-600 bg-amber-950/20 hover:bg-amber-900/20"
       )}
       onClick={onClick}
     >
@@ -62,7 +73,10 @@ export default function TopicCard({ topic, onClick, isReviewed, isStarred, onTog
             ))}
           </div>
           <button
-            onClick={(e) => { e.stopPropagation(); onToggleStarred?.(e); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleStarred?.(e);
+            }}
             title={isStarred ? "Unstar" : "Star as difficult"}
             className={cn(
               "flex-shrink-0 rounded p-0.5 transition-colors",
@@ -71,7 +85,9 @@ export default function TopicCard({ topic, onClick, isReviewed, isStarred, onTog
                 : "text-muted-foreground/40 hover:text-amber-400"
             )}
           >
-            <Star className={cn("w-3.5 h-3.5", isStarred && "fill-amber-400")} />
+            <Star
+              className={cn("w-3.5 h-3.5", isStarred && "fill-amber-400")}
+            />
           </button>
         </div>
         <CardTitle className="text-sm font-semibold leading-snug text-foreground">
@@ -80,9 +96,15 @@ export default function TopicCard({ topic, onClick, isReviewed, isStarred, onTog
       </CardHeader>
       <CardContent className="px-4 pb-4 pt-0 flex flex-col gap-2">
         {topic.formula ? (
-          <div className="font-mono text-xs bg-muted/50 rounded px-2 py-1.5 overflow-x-auto">
-            <Math latex={topic.formula} inline={false} />
-          </div>
+          isCS ? (
+            <div className="bg-muted/50 rounded px-2 py-1.5 overflow-x-auto">
+              <CodeBlock code={topic.formula} inline />
+            </div>
+          ) : (
+            <div className="font-mono text-xs bg-muted/50 rounded px-2 py-1.5 overflow-x-auto">
+              <Math latex={topic.formula} inline={false} />
+            </div>
+          )
         ) : (
           <p className="text-xs text-muted-foreground leading-relaxed">
             {renderInline(firstSentence(topic.description))}

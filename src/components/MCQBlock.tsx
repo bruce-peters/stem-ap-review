@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CheckCircle2, XCircle } from "lucide-react";
 import Math from "@/components/Math";
+import CodeBlock from "@/components/CodeBlock";
 
 interface MCQ {
   question: string;
@@ -14,6 +15,7 @@ interface MCQ {
 
 interface MCQBlockProps {
   mcqs: MCQ[];
+  isCS?: boolean;
   onComplete?: (score: number, total: number) => void;
 }
 
@@ -27,7 +29,7 @@ function renderInline(text: string) {
   });
 }
 
-export default function MCQBlock({ mcqs, onComplete }: MCQBlockProps) {
+export default function MCQBlock({ mcqs, isCS, onComplete }: MCQBlockProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -103,9 +105,26 @@ export default function MCQBlock({ mcqs, onComplete }: MCQBlockProps) {
         </span>
       </div>
 
-      <p className="text-sm font-medium leading-relaxed">
-        {renderInline(current.question)}
-      </p>
+      {(() => {
+        const parts = current.question.split(/\n\n/);
+        if (parts.length >= 2) {
+          const textPart = parts.slice(0, -1).join("\n\n").trim();
+          const codePart = parts[parts.length - 1].trim();
+          return (
+            <div className="flex flex-col gap-2">
+              <p className="text-sm font-medium leading-relaxed">
+                {renderInline(textPart)}
+              </p>
+              <CodeBlock code={codePart} />
+            </div>
+          );
+        }
+        return (
+          <p className="text-sm font-medium leading-relaxed">
+            {renderInline(current.question)}
+          </p>
+        );
+      })()}
 
       <RadioGroup
         value={selected ?? ""}

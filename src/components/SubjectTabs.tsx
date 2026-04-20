@@ -5,7 +5,15 @@ import TopicSheet from "@/components/TopicSheet";
 import UnitSidebar from "@/components/UnitSidebar";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { Search, FlaskConical, BookOpen, Monitor, Star, CheckCircle2, Circle } from "lucide-react";
+import {
+  Search,
+  FlaskConical,
+  BookOpen,
+  Monitor,
+  Star,
+  CheckCircle2,
+  Circle,
+} from "lucide-react";
 
 import calcbc from "@/data/calcbc";
 import physics from "@/data/physics";
@@ -95,11 +103,17 @@ export default function SubjectTabs() {
   const [starFilter, setStarFilter] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("stem-review:reviewed", JSON.stringify([...reviewedIds]));
+    localStorage.setItem(
+      "stem-review:reviewed",
+      JSON.stringify([...reviewedIds])
+    );
   }, [reviewedIds]);
 
   useEffect(() => {
-    localStorage.setItem("stem-review:starred", JSON.stringify([...starredIds]));
+    localStorage.setItem(
+      "stem-review:starred",
+      JSON.stringify([...starredIds])
+    );
   }, [starredIds]);
 
   function toggleReviewed(id: string) {
@@ -133,8 +147,7 @@ export default function SubjectTabs() {
       result = result.filter((t) => reviewedIds.has(t.id));
     else if (reviewFilter === false)
       result = result.filter((t) => !reviewedIds.has(t.id));
-    if (starFilter)
-      result = result.filter((t) => starredIds.has(t.id));
+    if (starFilter) result = result.filter((t) => starredIds.has(t.id));
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       result = result.filter(
@@ -146,7 +159,16 @@ export default function SubjectTabs() {
       );
     }
     return result;
-  }, [topics, selectedUnit, activeTags, reviewFilter, starFilter, reviewedIds, starredIds, search]);
+  }, [
+    topics,
+    selectedUnit,
+    activeTags,
+    reviewFilter,
+    starFilter,
+    reviewedIds,
+    starredIds,
+    search,
+  ]);
 
   function toggleTag(tag: string) {
     setActiveTags((prev) => {
@@ -249,9 +271,7 @@ export default function SubjectTabs() {
               Not reviewed
             </button>
             <button
-              onClick={() =>
-                setReviewFilter((v) => (v === true ? null : true))
-              }
+              onClick={() => setReviewFilter((v) => (v === true ? null : true))}
               className={cn(
                 "inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[11px] font-medium transition-all",
                 reviewFilter === true
@@ -300,6 +320,7 @@ export default function SubjectTabs() {
                     onClick={() => openCard(topic)}
                     isReviewed={reviewedIds.has(topic.id)}
                     isStarred={starredIds.has(topic.id)}
+                    isCS={subject === "cs"}
                     onToggleStarred={() => toggleStarred(topic.id)}
                   />
                 ))}
@@ -317,6 +338,7 @@ export default function SubjectTabs() {
         onToggleReviewed={() => openTopic && toggleReviewed(openTopic.id)}
         isStarred={openTopic ? starredIds.has(openTopic.id) : false}
         onToggleStarred={() => openTopic && toggleStarred(openTopic.id)}
+        isCS={subject === "cs"}
       />
     </div>
   );

@@ -5,7 +5,10 @@
       "WebFetch(domain:www.albert.io)",
       "WebFetch(domain:www.plusplustutors.com)",
       "WebFetch(domain:apcentral.collegeboard.org)",
-      "WebFetch(domain:library.fiveable.me)"
+      "WebFetch(domain:library.fiveable.me)",
+      "WebFetch(domain:www.apcsexamprep.com)",
+      "WebFetch(domain:apcsdebugger.com)",
+      "WebFetch(domain:goldiesmathemporium.com)"
     ]
   }
 }

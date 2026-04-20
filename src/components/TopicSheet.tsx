@@ -9,6 +9,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Math from "@/components/Math";
+import CodeBlock from "@/components/CodeBlock";
 import StepList from "@/components/StepList";
 import MCQBlock from "@/components/MCQBlock";
 import { TAG_COLORS } from "@/components/TopicCard";
@@ -23,6 +24,7 @@ interface TopicSheetProps {
   onToggleReviewed: () => void;
   isStarred: boolean;
   onToggleStarred: () => void;
+  isCS?: boolean;
 }
 
 function renderInline(text: string) {
@@ -43,6 +45,7 @@ export default function TopicSheet({
   onToggleReviewed,
   isStarred,
   onToggleStarred,
+  isCS,
 }: TopicSheetProps) {
   if (!topic) return null;
 
@@ -82,7 +85,9 @@ export default function TopicSheet({
                     : "bg-muted/40 text-muted-foreground border-border hover:bg-muted hover:text-amber-400"
                 )}
               >
-                <Star className={cn("w-3.5 h-3.5", isStarred && "fill-amber-400")} />
+                <Star
+                  className={cn("w-3.5 h-3.5", isStarred && "fill-amber-400")}
+                />
               </button>
               <button
                 onClick={onToggleReviewed}
@@ -124,9 +129,23 @@ export default function TopicSheet({
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
                   Formula
                 </h3>
-                <div className="bg-muted/40 rounded-lg px-4 py-3 overflow-x-auto font-mono">
-                  <Math latex={topic.formula} inline={false} />
-                </div>
+                {isCS ? (
+                  <CodeBlock code={topic.formula} />
+                ) : (
+                  <div className="bg-muted/40 rounded-lg px-4 py-3 overflow-x-auto font-mono">
+                    <Math latex={topic.formula} inline={false} />
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* Code Snippet */}
+            {isCS && topic.codeSnippet && (
+              <section>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  Code Snippet
+                </h3>
+                <CodeBlock code={topic.codeSnippet} />
               </section>
             )}
 
@@ -156,17 +175,25 @@ export default function TopicSheet({
                         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
                           Problem
                         </p>
-                        <p className="text-sm text-foreground leading-relaxed">
-                          {renderInline(ex.problem)}
-                        </p>
+                        {isCS && ex.problem.includes("\n") ? (
+                          <CodeBlock code={ex.problem} />
+                        ) : (
+                          <p className="text-sm text-foreground leading-relaxed">
+                            {renderInline(ex.problem)}
+                          </p>
+                        )}
                       </div>
                       <div className="px-4 py-3">
                         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
                           Solution
                         </p>
-                        <p className="text-sm text-foreground/90 leading-relaxed">
-                          {renderInline(ex.solution)}
-                        </p>
+                        {isCS && ex.solution.includes("\n") ? (
+                          <CodeBlock code={ex.solution} />
+                        ) : (
+                          <p className="text-sm text-foreground/90 leading-relaxed">
+                            {renderInline(ex.solution)}
+                          </p>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -180,7 +207,7 @@ export default function TopicSheet({
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
                   Practice Questions
                 </h3>
-                <MCQBlock mcqs={topic.mcqs} />
+                <MCQBlock mcqs={topic.mcqs} isCS={isCS} />
               </section>
             )}
           </div>
