@@ -1,3 +1,2 @@
-import type { Topic } from "@/types";
-const physics: Topic[] = [];
-export default physics;
+import { physicsTopics } from "./physics/index";
+export default physicsTopics;

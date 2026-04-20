@@ -270,3 +270,185 @@ series-manipulation            | Manipulating Series (substitution, differentiat
   - MCQ section: shadcn RadioGroup, submit button, reveal answer with shadcn Alert (green/red) + explanation
 - Search bar filters across all units and subjects
 - Tag filter pills below search bar
+
+---
+
+## Content: AP Physics 1 (Revised 2025)
+
+### File Structure for Physics
+```
+src/data/physics/
+  index.ts       # re-exports all units, exports physicsUnits string[]
+  u1-kinematics.ts
+  u2-dynamics.ts
+  u3-circular-motion-gravitation.ts
+  u4-energy.ts
+  u5-torque-rotational-dynamics.ts
+  u6-energy-momentum-rotating-systems.ts
+  u7-oscillations.ts
+  u8-fluids.ts
+```
+
+All files export an array of Topic[] using the same schema already defined in this file.
+
+### Content Inventory — AP Physics 1
+
+For each unit, list every testable concept, law, equation, and problem type.
+Format each item as a single compact line:
+ID | Name | Formula (plain text ok here) | Tags | Exam weight note
+
+Only include what's on the revised 2025 AP Physics 1 exam.
+Flag any item that is "new to 2025" so agents know to pay extra attention to sourcing.
+
+> **Curriculum note:** The official 2025 College Board unit structure differs slightly from the headings
+> below (official Unit 2 "Force and Translational Dynamics" covers all dynamics + circular motion as one
+> unit; official Unit 4 "Linear Momentum" is a standalone 10–15% unit not represented in this file
+> structure). Linear momentum items are filed under Unit 4 (Energy) here. Agents generating content
+> should draw from both the dynamics and circular motion sources for Unit 2 and Unit 3 respectively,
+> and include all momentum items within Unit 4.
+
+---
+
+### Unit 1: Kinematics (10–15% of exam)
+
+```
+kinematics-scalars-vectors     | Scalars and Vectors in One Dimension              |                                                                              | MCQ frequent
+kinematics-displacement        | Displacement and Distance                         | \Delta x = x_f - x_i                                                         | MCQ frequent
+kinematics-avg-velocity        | Average Velocity and Speed                        | \bar{v} = \Delta x / \Delta t                                                | MCQ frequent
+kinematics-acceleration        | Acceleration                                      | a = \Delta v / \Delta t                                                      | MCQ frequent
+kinematics-eq-vt               | Kinematic Equation 1 (v–t)                        | v = v_0 + at                                                                  | MCQ frequent
+kinematics-eq-xt               | Kinematic Equation 2 (x–t)                        | x = x_0 + v_0 t + \tfrac{1}{2}at^2                                           | MCQ frequent
+kinematics-eq-vx               | Kinematic Equation 3 (v²–x)                       | v^2 = v_0^2 + 2a\Delta x                                                     | MCQ frequent
+motion-graphs                  | Interpreting Motion Graphs (x-t, v-t, a-t)        |                                                                              | MCQ frequent, FRQ
+free-fall                      | Free Fall and Acceleration Due to Gravity         | a = g = 9.8\ \text{m/s}^2                                                    | MCQ frequent
+reference-frames               | Reference Frames and Relative Motion              | \vec{v}_{AC} = \vec{v}_{AB} + \vec{v}_{BC}                                   | MCQ frequent
+projectile-motion              | Projectile Motion                                 | x = v_{x0}t,\quad y = v_{y0}t - \tfrac{1}{2}gt^2                            | MCQ frequent, FRQ
+vector-components              | Vector Resolution into Components                 | v_x = v\cos\theta,\quad v_y = v\sin\theta                                    | MCQ frequent
+```
+
+---
+
+### Unit 2: Dynamics (10–15%)
+
+```
+systems-center-of-mass         | Systems and Center of Mass                        | x_{cm} = \frac{\sum m_i x_i}{\sum m_i}                                       | MCQ frequent
+free-body-diagrams             | Free-Body Diagrams                                |                                                                              | MCQ frequent, FRQ
+newtons-first-law              | Newton's First Law (Law of Inertia)               | \sum \vec{F} = \vec{0} \Rightarrow a = 0                                     | MCQ frequent, theorem
+newtons-second-law             | Newton's Second Law                               | \sum F = ma                                                                   | MCQ frequent, FRQ, theorem
+newtons-third-law              | Newton's Third Law (Action-Reaction Pairs)        | \vec{F}_{AB} = -\vec{F}_{BA}                                                  | MCQ frequent, theorem
+weight-near-surface            | Weight and Near-Surface Gravitational Force       | F_g = mg                                                                      | MCQ frequent
+normal-force                   | Normal Force                                      |                                                                              | MCQ frequent
+static-kinetic-friction        | Static and Kinetic Friction                       | f_s \le \mu_s F_N,\quad f_k = \mu_k F_N                                      | MCQ frequent, FRQ
+hookes-law                     | Hooke's Law / Spring Force                        | F_s = kx                                                                      | MCQ frequent
+multi-body-systems             | Multi-Body Systems and Tension                    |                                                                              | MCQ frequent, FRQ
+inclined-plane-forces          | Force Analysis on Inclined Planes                 |                                                                              | MCQ frequent, FRQ
+```
+
+---
+
+### Unit 3: Circular Motion and Gravitation (5–10%)
+
+```
+uniform-circular-motion        | Uniform Circular Motion                           | a_c = v^2/r                                                                   | MCQ frequent
+centripetal-force              | Net Centripetal Force                             | F_c = mv^2/r                                                                  | MCQ frequent, FRQ
+universal-gravitation          | Newton's Law of Universal Gravitation             | F_g = Gm_1 m_2 / r^2                                                         | MCQ frequent, theorem
+gravitational-field            | Gravitational Field Strength                      | g = GM/r^2                                                                    | MCQ frequent
+orbital-speed                  | Speed of Circular Orbit                           | v_{orb} = \sqrt{GM/r}                                                         | MCQ frequent, FRQ
+orbital-period                 | Period of Circular Orbit                          | T = 2\pi r / v                                                                | MCQ frequent
+vertical-circular-motion       | Vertical Circular Motion (top and bottom)         |                                                                              | MCQ frequent, FRQ
+```
+
+---
+
+### Unit 4: Energy (18–23%)
+
+> Includes **Linear Momentum** items (official 2025 Unit 4, 10–15%) since the app file structure
+> has no standalone momentum file. Momentum IDs are prefixed `mom-`.
+
+```
+translational-ke               | Translational Kinetic Energy                      | K = \tfrac{1}{2}mv^2                                                          | MCQ frequent
+gravitational-pe               | Gravitational Potential Energy                    | U_g = mgy                                                                     | MCQ frequent
+elastic-pe                     | Elastic (Spring) Potential Energy                 | U_s = \tfrac{1}{2}kx^2                                                        | MCQ frequent
+work-constant-force            | Work by a Constant Force                          | W = Fd\cos\theta                                                              | MCQ frequent, FRQ
+work-variable-force            | Work by a Variable Force (area under F-x graph)   |                                                                              | MCQ frequent, FRQ
+work-energy-theorem            | Work-Energy Theorem                               | W_{net} = \Delta K                                                            | MCQ frequent, theorem
+conservation-energy            | Conservation of Mechanical Energy                 | E_{mech} = K + U = \text{const (no friction)}                                | MCQ frequent, FRQ, theorem
+energy-nonconservative         | Energy with Non-Conservative Forces               | W_{ext} = \Delta E_{system}                                                   | MCQ frequent, FRQ
+power                          | Power                                             | P = W/t = Fv                                                                  | MCQ frequent
+energy-bar-charts              | Energy Bar Charts / LOL Diagrams                  |                                                                              | MCQ frequent, FRQ
+mom-linear-momentum            | Linear Momentum                                   | p = mv                                                                        | MCQ frequent
+mom-impulse-momentum           | Impulse-Momentum Theorem                          | J = F\Delta t = \Delta p                                                      | MCQ frequent, FRQ
+mom-conservation               | Conservation of Linear Momentum                   | \sum p_i = \sum p_f                                                           | MCQ frequent, FRQ, theorem
+mom-elastic-collision          | Elastic Collisions                                | K_i = K_f,\quad \sum p_i = \sum p_f                                           | MCQ frequent, FRQ
+mom-inelastic-collision        | Perfectly Inelastic Collisions                    |                                                                              | MCQ frequent, FRQ
+mom-impulse-ft-graph           | Impulse from Force-Time Graphs                    | J = \text{area under }F\text{-}t\text{ curve}                                | MCQ frequent, FRQ
+```
+
+---
+
+### Unit 5: Torque and Rotational Dynamics (10–15%)
+
+```
+rotational-kinematics          | Rotational Kinematics Equations                   | \omega = \omega_0 + \alpha t,\quad \theta = \omega_0 t + \tfrac{1}{2}\alpha t^2 | MCQ frequent
+angular-velocity-acceleration  | Angular Velocity and Angular Acceleration         | \omega = \Delta\theta/\Delta t,\quad \alpha = \Delta\omega/\Delta t          | MCQ frequent
+linear-rotational-link         | Connecting Linear and Rotational Quantities       | v = r\omega,\quad a_t = r\alpha                                               | MCQ frequent
+torque                         | Torque                                            | \tau = rF\sin\theta                                                           | MCQ frequent, FRQ
+rotational-inertia-def         | Rotational Inertia (Definition)                   | I = \sum m_i r_i^2                                                            | MCQ frequent, theorem
+rotational-inertia-objects     | Rotational Inertia of Common Objects              | I_{disk}=\tfrac{1}{2}MR^2,\quad I_{rod,cm}=\tfrac{1}{12}ML^2,\quad I_{sphere}=\tfrac{2}{5}MR^2 | MCQ frequent, FRQ
+rotational-newtons-2nd         | Newton's Second Law in Rotational Form            | \sum\tau = I\alpha                                                            | MCQ frequent, FRQ, theorem
+rotational-equilibrium         | Rotational Equilibrium (Newton's 1st, Rotational) | \sum\tau = 0                                                                  | MCQ frequent, FRQ, theorem
+static-equilibrium             | Static Equilibrium (Translational + Rotational)   | \sum F = 0,\quad \sum\tau = 0                                                 | MCQ frequent, FRQ
+```
+
+---
+
+### Unit 6: Energy and Momentum of Rotating Systems (5–10%)
+
+```
+rotational-ke                  | Rotational Kinetic Energy                         | K_{rot} = \tfrac{1}{2}I\omega^2                                               | MCQ frequent
+total-ke-rolling               | Total KE of a Rolling Object                      | K_{total} = \tfrac{1}{2}mv^2 + \tfrac{1}{2}I\omega^2                         | MCQ frequent, FRQ
+torque-work                    | Work Done by a Torque                             | W = \tau\Delta\theta                                                          | MCQ frequent
+angular-momentum               | Angular Momentum                                  | L = I\omega                                                                   | MCQ frequent
+angular-impulse                | Angular Impulse-Momentum Theorem                  | \Delta L = \tau\Delta t                                                       | MCQ frequent, FRQ
+conservation-angular-momentum  | Conservation of Angular Momentum                  | L_i = L_f\ \text{(no net external torque)}                                   | MCQ frequent, FRQ, theorem
+rolling-without-slipping       | Rolling Without Slipping Constraint               | v_{cm} = r\omega,\quad a_{cm} = r\alpha                                       | MCQ frequent, FRQ
+orbital-motion-energy          | Orbiting Satellites and Gravitational Energy      |                                                                              | MCQ frequent, FRQ
+```
+
+---
+
+### Unit 7: Oscillations / Simple Harmonic Motion (5–10%)
+
+```
+shm-restoring-force            | Restoring Force in SHM                            | F_{net} = -kx                                                                 | MCQ frequent, theorem
+shm-conditions                 | Conditions for Simple Harmonic Motion             | a \propto -x                                                                  | MCQ frequent
+shm-period-frequency           | Period, Frequency, and Angular Frequency          | f = 1/T,\quad \omega = 2\pi f                                                 | MCQ frequent
+spring-period                  | Period of a Spring-Mass System                    | T = 2\pi\sqrt{m/k}                                                            | MCQ frequent, FRQ
+pendulum-period                | Period of a Simple Pendulum                       | T = 2\pi\sqrt{L/g}                                                            | MCQ frequent, FRQ
+shm-position-time              | Position as a Function of Time in SHM             | x(t) = A\cos(2\pi ft)                                                         | MCQ frequent
+shm-velocity-acceleration      | Maximum Velocity and Acceleration in SHM          | v_{max} = A\omega,\quad a_{max} = A\omega^2                                   | MCQ frequent
+shm-energy                     | Energy Conservation in SHM                        | E = \tfrac{1}{2}kA^2 = K + U_s = \text{const}                                | MCQ frequent, FRQ
+shm-graphs                     | SHM Graphical Representations (x, v, a vs. t)     |                                                                              | MCQ frequent, FRQ
+shm-reference-circle           | Relationship Between SHM and Circular Motion      |                                                                              | MCQ frequent
+```
+
+---
+
+### Unit 8: Fluids (10–15%) ← NEW in 2025
+
+```
+fluid-density                  | Density                                           | \rho = m/V                                                                    | MCQ frequent | new to 2025
+pressure-definition            | Pressure (definition)                             | P = F/A                                                                       | MCQ frequent | new to 2025
+pressure-depth                 | Pressure at Depth in a Static Fluid               | P = P_0 + \rho g h                                                            | MCQ frequent, FRQ | new to 2025
+gauge-pressure                 | Gauge Pressure vs. Absolute Pressure              | P_{gauge} = P - P_{atm}                                                       | MCQ frequent | new to 2025
+pascal-principle               | Pascal's Principle                                | \Delta P_1 = \Delta P_2\ \Rightarrow\ F_1/A_1 = F_2/A_2                      | MCQ frequent, theorem | new to 2025
+archimedes-principle           | Archimedes' Principle / Buoyant Force             | F_b = \rho_{fluid}\, V_{disp}\, g                                             | MCQ frequent, FRQ, theorem | new to 2025
+floating-sinking               | Floating and Sinking Conditions                   | \rho_{obj} < \rho_{fluid} \Rightarrow \text{floats}                           | MCQ frequent, FRQ | new to 2025
+fluids-newtons-laws            | Fluids and Newton's Laws (net force on objects)   |                                                                              | MCQ frequent, FRQ | new to 2025
+continuity-equation            | Continuity Equation (Conservation of Mass in Flow)| A_1 v_1 = A_2 v_2                                                             | MCQ frequent, FRQ, theorem | new to 2025
+bernoullis-equation            | Bernoulli's Equation                              | P_1 + \tfrac{1}{2}\rho v_1^2 + \rho g y_1 = P_2 + \tfrac{1}{2}\rho v_2^2 + \rho g y_2 | MCQ frequent, FRQ, theorem | new to 2025
+bernoulli-apps                 | Applications of Bernoulli (Venturi, lift, Torricelli) |                                                                          | MCQ frequent, FRQ | new to 2025
+fluid-flow-qualitative         | Laminar vs. Turbulent Flow (qualitative)          |                                                                              | MCQ frequent | new to 2025
+```
+
+---

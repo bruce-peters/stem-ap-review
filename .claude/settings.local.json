@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.examples.com)",
+      "WebFetch(domain:www.albert.io)",
+      "WebFetch(domain:www.plusplustutors.com)",
+      "WebFetch(domain:apcentral.collegeboard.org)",
+      "WebFetch(domain:library.fiveable.me)"
+    ]
+  }
+}
