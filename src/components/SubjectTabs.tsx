@@ -1,10 +1,12 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import type { Topic } from "@/types";
 import TopicCard from "@/components/TopicCard";
 import TopicSheet from "@/components/TopicSheet";
 import UnitSidebar from "@/components/UnitSidebar";
+import LoginButton from "@/components/LoginButton";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/context/AuthContext";
 import {
   Search,
   FlaskConical,
@@ -76,61 +78,22 @@ function EmptyState({ subject }: { subject: string }) {
 }
 
 export default function SubjectTabs() {
+  const {
+    completedIds: reviewedIds,
+    starredIds,
+    toggleCompleted: toggleReviewed,
+    toggleStarred,
+  } = useAuth();
+
   const [subject, setSubject] = useState<Subject>("calcbc");
   const [search, setSearch] = useState("");
   const [selectedUnit, setSelectedUnit] = useState<number | null>(null);
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
   const [openTopic, setOpenTopic] = useState<Topic | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
-  const [reviewedIds, setReviewedIds] = useState<Set<string>>(() => {
-    try {
-      const stored = localStorage.getItem("stem-review:reviewed");
-      return stored ? new Set(JSON.parse(stored) as string[]) : new Set();
-    } catch {
-      return new Set();
-    }
-  });
-  const [starredIds, setStarredIds] = useState<Set<string>>(() => {
-    try {
-      const stored = localStorage.getItem("stem-review:starred");
-      return stored ? new Set(JSON.parse(stored) as string[]) : new Set();
-    } catch {
-      return new Set();
-    }
-  });
   // null = show all, true = reviewed only, false = unreviewed only
   const [reviewFilter, setReviewFilter] = useState<boolean | null>(null);
   const [starFilter, setStarFilter] = useState(false);
-
-  useEffect(() => {
-    localStorage.setItem(
-      "stem-review:reviewed",
-      JSON.stringify([...reviewedIds])
-    );
-  }, [reviewedIds]);
-
-  useEffect(() => {
-    localStorage.setItem(
-      "stem-review:starred",
-      JSON.stringify([...starredIds])
-    );
-  }, [starredIds]);
-
-  function toggleReviewed(id: string) {
-    setReviewedIds((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-  }
-
-  function toggleStarred(id: string) {
-    setStarredIds((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-  }
 
   const currentSubject = SUBJECTS.find((s) => s.id === subject)!;
   const topics = currentSubject.data;
@@ -214,6 +177,9 @@ export default function SubjectTabs() {
             </button>
           ))}
         </nav>
+        <div className="ml-auto">
+          <LoginButton />
+        </div>
       </header>
 
       {/* Search + tag filters */}
