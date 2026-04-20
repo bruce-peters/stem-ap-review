@@ -15,6 +15,8 @@ import {
   Star,
   CheckCircle2,
   Circle,
+  PanelRight,
+  LayoutTemplate,
 } from "lucide-react";
 
 import calcbc from "@/data/calcbc";
@@ -91,6 +93,7 @@ export default function SubjectTabs() {
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
   const [openTopic, setOpenTopic] = useState<Topic | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<"side" | "center">("center");
   // null = show all, true = reviewed only, false = unreviewed only
   const [reviewFilter, setReviewFilter] = useState<boolean | null>(null);
   const [starFilter, setStarFilter] = useState(false);
@@ -177,7 +180,33 @@ export default function SubjectTabs() {
             </button>
           ))}
         </nav>
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-2">
+          <div className="flex items-center rounded-md border border-border bg-muted/40 p-0.5 gap-0.5">
+            <button
+              onClick={() => setViewMode("side")}
+              title="Side panel view"
+              className={cn(
+                "flex items-center justify-center rounded p-1.5 transition-colors",
+                viewMode === "side"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <PanelRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setViewMode("center")}
+              title="Center view"
+              className={cn(
+                "flex items-center justify-center rounded p-1.5 transition-colors",
+                viewMode === "center"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <LayoutTemplate className="w-3.5 h-3.5" />
+            </button>
+          </div>
           <LoginButton />
         </div>
       </header>
@@ -305,6 +334,7 @@ export default function SubjectTabs() {
         isStarred={openTopic ? starredIds.has(openTopic.id) : false}
         onToggleStarred={() => openTopic && toggleStarred(openTopic.id)}
         isCS={subject === "cs"}
+        viewMode={viewMode}
       />
     </div>
   );
