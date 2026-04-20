@@ -1,4 +1,6 @@
-@tailwind base;
+import sys
+
+css = """@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -25,15 +27,11 @@
     --ring: 0 0% 83.1%;
     --radius: 0.5rem;
   }
+}
 
-  * {
-    @apply border-border;
-  }
-
-  html {
-    color-scheme: dark;
-  }
-
+@layer base {
+  * { @apply border-border; }
+  html { @apply dark; color-scheme: dark; }
   body {
     @apply bg-background text-foreground;
     font-family: "DM Sans", system-ui, sans-serif;
@@ -41,26 +39,15 @@
   }
 }
 
-.katex-display {
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0.25rem 0;
-}
+.katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.25rem 0; }
 
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(0 0% 20%); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(0 0% 30%); }
+"""
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: hsl(0 0% 20%);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(0 0% 30%);
-}
+target = sys.argv[1] if len(sys.argv) > 1 else "src/index.css"
+with open(target, "w", encoding="utf-8") as f:
+    f.write(css)
+print("Written:", target)
