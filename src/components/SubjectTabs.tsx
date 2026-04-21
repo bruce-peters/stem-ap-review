@@ -17,8 +17,10 @@ import {
   Circle,
   PanelRight,
   LayoutTemplate,
+  PenLine,
 } from "lucide-react";
 
+import NotesSidebar from "@/components/NotesSidebar";
 import calcbc from "@/data/calcbc";
 import physics from "@/data/physics";
 import cs from "@/data/cs";
@@ -85,6 +87,8 @@ export default function SubjectTabs() {
     starredIds,
     toggleCompleted: toggleReviewed,
     toggleStarred,
+    notes,
+    saveNote,
   } = useAuth();
 
   const [subject, setSubject] = useState<Subject>("calcbc");
@@ -94,12 +98,19 @@ export default function SubjectTabs() {
   const [openTopic, setOpenTopic] = useState<Topic | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"side" | "center">("center");
+  const [notesOpen, setNotesOpen] = useState(false);
   // null = show all, true = reviewed only, false = unreviewed only
   const [reviewFilter, setReviewFilter] = useState<boolean | null>(null);
   const [starFilter, setStarFilter] = useState(false);
 
   const currentSubject = SUBJECTS.find((s) => s.id === subject)!;
   const topics = currentSubject.data;
+
+  const noteKey = `${subject}:${selectedUnit ?? "all"}`;
+  const noteUnitLabel =
+    selectedUnit !== null
+      ? topics.find((t) => t.unitNumber === selectedUnit)?.unit ?? `Unit ${selectedUnit}`
+      : `${currentSubject.label} — All Units`;
 
   const filtered = useMemo(() => {
     let result = topics;
@@ -207,6 +218,18 @@ export default function SubjectTabs() {
               <LayoutTemplate className="w-3.5 h-3.5" />
             </button>
           </div>
+          <button
+            onClick={() => setNotesOpen((v) => !v)}
+            title="Toggle notes"
+            className={cn(
+              "flex items-center justify-center rounded-md border border-border p-1.5 transition-colors",
+              notesOpen
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-muted/40 text-muted-foreground hover:text-foreground"
+            )}
+          >
+            <PenLine className="w-3.5 h-3.5" />
+          </button>
           <LoginButton />
         </div>
       </header>
@@ -323,6 +346,15 @@ export default function SubjectTabs() {
             </div>
           )}
         </main>
+
+        {notesOpen && topics.length > 0 && (
+          <NotesSidebar
+            noteKey={noteKey}
+            unitLabel={noteUnitLabel}
+            value={notes[noteKey] ?? ""}
+            onSave={saveNote}
+          />
+        )}
       </div>
 
       <TopicSheet

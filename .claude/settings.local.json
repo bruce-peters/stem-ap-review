@@ -10,5 +10,9 @@
       "WebFetch(domain:apcsdebugger.com)",
       "WebFetch(domain:goldiesmathemporium.com)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "supabase"
+  ],
+  "enableAllProjectMcpServers": true
 }

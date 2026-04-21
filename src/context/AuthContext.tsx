@@ -21,6 +21,9 @@ interface AuthContextValue {
   starredIds: Set<string>;
   toggleCompleted: (id: string) => void;
   toggleStarred: (id: string) => void;
+  /** Notes keyed by "subject:unitNumber" or "subject:all" */
+  notes: Record<string, string>;
+  saveNote: (key: string, text: string) => void;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -34,6 +37,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [starredIds, setStarredIds] = useState<Set<string>>(() =>
     loadLocalIds("stem-review:starred")
   );
+  const [notes, setNotes] = useState<Record<string, string>>({});
 
   // Whether we're currently synced to the database (user logged in)
   const dbSynced = useRef(false);
@@ -58,8 +62,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("stem-review:starred", JSON.stringify([...starred]));
   }
 
-  /** Upsert progress to Supabase */
-  const syncToDb = useCallback(
+  /** Upsert completed/starred progress to Supabase */
+  const syncProgressToDb = useCallback(
     async (completed: Set<string>, starred: Set<string>, userId: string) => {
       await supabase.from("user_progress").upsert(
         {
@@ -74,11 +78,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     []
   );
 
+  /** Upsert notes to Supabase (requires notes jsonb column) */
+  const syncNotesToDb = useCallback(
+    async (notesMap: Record<string, string>, userId: string) => {
+      await supabase.from("user_progress").upsert(
+        {
+          user_id: userId,
+          notes: notesMap,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id" }
+      );
+    },
+    []
+  );
+
   /** Load progress from Supabase, merging localStorage data on first login */
   const loadFromDb = useCallback(async (userId: string) => {
     const { data } = await supabase
       .from("user_progress")
-      .select("completed_ids, starred_ids")
+      .select("completed_ids, starred_ids, notes")
       .eq("user_id", userId)
       .single();
 
@@ -87,6 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const dbCompleted = new Set<string>(data?.completed_ids ?? []);
     const dbStarred = new Set<string>(data?.starred_ids ?? []);
+    const dbNotes: Record<string, string> = (data as { notes?: Record<string, string> } | null)?.notes ?? {};
 
     // Merge localStorage into DB on first login (union)
     const mergedCompleted = new Set([...dbCompleted, ...localCompleted]);
@@ -94,16 +114,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setCompletedIds(mergedCompleted);
     setStarredIds(mergedStarred);
+    setNotes(dbNotes);
     dbSynced.current = true;
 
     // Persist the merge back to DB if there was anything local to add
     if (localCompleted.size > 0 || localStarred.size > 0) {
-      await syncToDb(mergedCompleted, mergedStarred, userId);
-      // Clear localStorage now that it's in the DB
+      await syncProgressToDb(mergedCompleted, mergedStarred, userId);
       localStorage.removeItem("stem-review:reviewed");
       localStorage.removeItem("stem-review:starred");
     }
-  }, [syncToDb]);
+  }, [syncProgressToDb]);
 
   // ── auth listener ─────────────────────────────────────────────────────────
 
@@ -129,6 +149,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // Reload from localStorage when logged out
         setCompletedIds(loadLocalIds("stem-review:reviewed"));
         setStarredIds(loadLocalIds("stem-review:starred"));
+        setNotes({});
       }
     });
 
@@ -143,14 +164,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const next = new Set(prev);
         next.has(id) ? next.delete(id) : next.add(id);
         if (user && dbSynced.current) {
-          syncToDb(next, starredIds, user.id);
+          syncProgressToDb(next, starredIds, user.id);
         } else {
           saveLocal(next, starredIds);
         }
         return next;
       });
     },
-    [user, starredIds, syncToDb]
+    [user, starredIds, syncProgressToDb]
   );
 
   const toggleStarred = useCallback(
@@ -159,14 +180,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const next = new Set(prev);
         next.has(id) ? next.delete(id) : next.add(id);
         if (user && dbSynced.current) {
-          syncToDb(completedIds, next, user.id);
+          syncProgressToDb(completedIds, next, user.id);
         } else {
           saveLocal(completedIds, next);
         }
         return next;
       });
     },
-    [user, completedIds, syncToDb]
+    [user, completedIds, syncProgressToDb]
+  );
+
+  const saveNote = useCallback(
+    (key: string, text: string) => {
+      setNotes((prev) => {
+        const next = { ...prev, [key]: text };
+        if (user && dbSynced.current) {
+          syncNotesToDb(next, user.id);
+        }
+        return next;
+      });
+    },
+    [user, syncNotesToDb]
   );
 
   // ── auth actions ──────────────────────────────────────────────────────────
@@ -197,6 +231,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         starredIds,
         toggleCompleted,
         toggleStarred,
+        notes,
+        saveNote,
       }}
     >
       {children}
