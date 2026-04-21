@@ -19,6 +19,7 @@ import Math from "@/components/Math";
 import CodeBlock from "@/components/CodeBlock";
 import StepList from "@/components/StepList";
 import MCQBlock from "@/components/MCQBlock";
+import NotesSidebar from "@/components/NotesSidebar";
 import { TAG_COLORS } from "@/components/TopicCard";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, Circle, Star } from "lucide-react";
@@ -33,6 +34,11 @@ interface TopicSheetProps {
   onToggleStarred: () => void;
   isCS?: boolean;
   viewMode?: "side" | "center";
+  notesOpen?: boolean;
+  noteKey?: string;
+  noteUnitLabel?: string;
+  noteValue?: string;
+  onSaveNote?: (key: string, text: string) => void;
 }
 
 function renderInline(text: string) {
@@ -234,6 +240,11 @@ export default function TopicSheet({
   onToggleStarred,
   isCS,
   viewMode = "side",
+  notesOpen,
+  noteKey,
+  noteUnitLabel,
+  noteValue,
+  onSaveNote,
 }: TopicSheetProps) {
   if (!topic) return null;
 
@@ -246,21 +257,39 @@ export default function TopicSheet({
     isCS,
   };
 
+  const showNotes = notesOpen && noteKey && onSaveNote;
+
   if (viewMode === "center") {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="p-0">
-          <DialogHeader className="px-6 pt-6 pb-4 flex-shrink-0">
-            <TopicContent
-              {...sharedHeaderProps}
-              TitleComponent={DialogTitle}
-              DescriptionComponent={DialogDescription}
-            />
-          </DialogHeader>
-          <Separator className="flex-shrink-0" />
-          <div className="overflow-y-auto max-h-[calc(90vh-140px)]">
-            <TopicBody topic={topic} isCS={isCS} />
+        <DialogContent
+          className={cn(
+            "p-0 flex flex-row gap-0 overflow-hidden max-h-[90vh]",
+            showNotes ? "max-w-5xl" : "max-w-2xl"
+          )}
+        >
+          <div className="flex flex-col flex-1 min-w-0">
+            <DialogHeader className="px-6 pt-6 pb-4 flex-shrink-0">
+              <TopicContent
+                {...sharedHeaderProps}
+                TitleComponent={DialogTitle}
+                DescriptionComponent={DialogDescription}
+              />
+            </DialogHeader>
+            <Separator className="flex-shrink-0" />
+            <div className="overflow-y-auto flex-1 min-h-0">
+              <TopicBody topic={topic} isCS={isCS} />
+            </div>
           </div>
+          {showNotes && (
+            <NotesSidebar
+              noteKey={noteKey!}
+              unitLabel={noteUnitLabel ?? ""}
+              value={noteValue ?? ""}
+              onSave={onSaveNote!}
+              className="max-h-[90vh]"
+            />
+          )}
         </DialogContent>
       </Dialog>
     );
@@ -270,19 +299,32 @@ export default function TopicSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="right"
-        className="w-full sm:max-w-2xl p-0 flex flex-col bg-card border-border"
+        className={cn(
+          "w-full p-0 flex flex-row bg-card border-border",
+          showNotes ? "sm:max-w-4xl" : "sm:max-w-2xl"
+        )}
       >
-        <SheetHeader className="px-6 pt-6 pb-4 flex-shrink-0">
-          <TopicContent
-            {...sharedHeaderProps}
-            TitleComponent={SheetTitle}
-            DescriptionComponent={SheetDescription}
+        <div className="flex flex-col flex-1 min-w-0">
+          <SheetHeader className="px-6 pt-6 pb-4 flex-shrink-0">
+            <TopicContent
+              {...sharedHeaderProps}
+              TitleComponent={SheetTitle}
+              DescriptionComponent={SheetDescription}
+            />
+          </SheetHeader>
+          <Separator className="flex-shrink-0" />
+          <ScrollArea className="flex-1 min-h-0">
+            <TopicBody topic={topic} isCS={isCS} />
+          </ScrollArea>
+        </div>
+        {showNotes && (
+          <NotesSidebar
+            noteKey={noteKey!}
+            unitLabel={noteUnitLabel ?? ""}
+            value={noteValue ?? ""}
+            onSave={onSaveNote!}
           />
-        </SheetHeader>
-        <Separator className="flex-shrink-0" />
-        <ScrollArea className="flex-1 min-h-0">
-          <TopicBody topic={topic} isCS={isCS} />
-        </ScrollArea>
+        )}
       </SheetContent>
     </Sheet>
   );

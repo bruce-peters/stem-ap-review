@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { PenLine, Check } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface NotesSidebarProps {
   noteKey: string;
   unitLabel: string;
   value: string;
   onSave: (key: string, text: string) => void;
+  className?: string;
 }
 
 export default function NotesSidebar({
@@ -15,6 +17,7 @@ export default function NotesSidebar({
   unitLabel,
   value,
   onSave,
+  className,
 }: NotesSidebarProps) {
   const [draft, setDraft] = useState(value);
   const [saved, setSaved] = useState(false);
@@ -38,7 +41,7 @@ export default function NotesSidebar({
   }
 
   return (
-    <aside className="w-64 flex-shrink-0 border-l border-border bg-card hidden md:flex flex-col">
+    <aside className={cn("w-72 flex-shrink-0 border-l border-border bg-card hidden md:flex flex-col", className)}>
       <div className="px-4 py-3 border-b border-border flex items-center justify-between">
         <div className="flex items-center gap-2">
           <PenLine className="w-3.5 h-3.5 text-muted-foreground" />

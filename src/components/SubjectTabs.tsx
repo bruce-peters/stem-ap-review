@@ -347,7 +347,7 @@ export default function SubjectTabs() {
           )}
         </main>
 
-        {notesOpen && topics.length > 0 && (
+        {notesOpen && topics.length > 0 && !sheetOpen && (
           <NotesSidebar
             noteKey={noteKey}
             unitLabel={noteUnitLabel}
@@ -367,6 +367,11 @@ export default function SubjectTabs() {
         onToggleStarred={() => openTopic && toggleStarred(openTopic.id)}
         isCS={subject === "cs"}
         viewMode={viewMode}
+        notesOpen={notesOpen}
+        noteKey={noteKey}
+        noteUnitLabel={noteUnitLabel}
+        noteValue={notes[noteKey] ?? ""}
+        onSaveNote={saveNote}
       />
     </div>
   );
