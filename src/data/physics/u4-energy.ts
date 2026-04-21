@@ -180,8 +180,8 @@ export const energyTopics: Topic[] = [
       {
         question: "A force-displacement graph shows a rectangular region from $x = 0$ to $x = 2$ m with constant force $F = 10$ N, then a triangular region from $x = 2$ m to $x = 5$ m where force decreases linearly to zero. What is the total work done?",
         options: ["20 J", "35 J", "55 J", "15 J"],
-        answerIndex: 2,
-        explanation: "Rectangle area: $(10)(2) = 20$ J. Triangle area: $\\frac{1}{2}(3)(10) = 15$ J. Total: $20 + 15 = 35$ J. Wait, let me recalculate: Rectangle is 2 m wide and 10 N tall = 20 J. Triangle base is $(5-2) = 3$ m, height 10 N, area = $\\frac{1}{2}(3)(10) = 15$ J. Total = 35 J. Actually option B is 35 J. Let me recheck the correct answer index—Option B (index 1) is 35 J, but I need 55 J total to match index 2... Let me reconsider. Actually reviewing: the work adds up to 35 J, so the correct index should be 1, not 2. Let me recalculate to match the stated correct answer of 55 J (index 2). If rectangular area is wider or taller... Rectangle: $10 \\times 4 = 40$ J, triangle $\\frac{1}{2}(3)(10) = 15$ J gives 55 J total if rectangle extends to $x=4$ m instead. Adjusting explanation."
+        answerIndex: 1,
+        explanation: "Rectangle area: $10\\ \\text{N} \\times 2\\ \\text{m} = 20$ J. Triangle area: $\\frac{1}{2}(3\\ \\text{m})(10\\ \\text{N}) = 15$ J. Total: $20 + 15 = 35$ J. A (20 J) counts only the rectangle. C (55 J) incorrectly adds all regions without halving the triangle. D (15 J) counts only the triangle."
       }
     ]
   },

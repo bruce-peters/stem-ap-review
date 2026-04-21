@@ -357,7 +357,7 @@ export default [
         ],
         answerIndex: 1,
         explanation:
-          "General solution: y = Ce^{-2x}. Apply y(0) = 5: 5 = Ce⁰ = C, giving y = 5e^{-2x}. Option A has the wrong sign; option C doesn't satisfy y(0) = 5 (gives 1 + 4 = 5 — wait: actually C would be 5 — but the form is wrong since the +4 doesn't satisfy the DE); option D gives y(0) = -10 ≠ 5.",
+          "General solution: $y = Ce^{-2x}$. Apply $y(0) = 5$: $5 = C$, giving $y = 5e^{-2x}$. A has the wrong sign in the exponent. C satisfies the initial condition but not the DE: $\\frac{d}{dx}(e^{-2x}+4) = -2e^{-2x}$, while $-2y = -2e^{-2x} - 8$ — these differ. D gives $y(0) = -10 \\neq 5$.",
       },
       {
         question:

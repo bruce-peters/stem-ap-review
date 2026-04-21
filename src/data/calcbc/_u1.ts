@@ -90,9 +90,9 @@ export default [
         question:
           "Let $f(x) = \\begin{cases} 2x + 1 & x < 1 \\\\ x^2 + 2 & x \\geq 1 \\end{cases}$. What is $\\lim_{x \\to 1} f(x)$?",
         options: ["3", "DNE", "2", "1"],
-        answerIndex: 1,
+        answerIndex: 0,
         explanation:
-          "Left-hand limit: $2(1) + 1 = 3$. Right-hand limit: $(1)^2 + 2 = 3$. Wait — both equal 3, so the limit is 3. Actually the correct answer is A (3): left limit = $2(1)+1 = 3$, right limit = $1+2 = 3$, so $\\lim_{x\\to 1} f(x) = 3$. DNE would apply only if the one-sided limits differed. 2 and 1 are arithmetic errors in evaluating the pieces.",
+          "Left-hand limit: $2(1) + 1 = 3$. Right-hand limit: $(1)^2 + 2 = 3$. Both one-sided limits equal 3, so $\\lim_{x\\to 1} f(x) = 3$. DNE would apply only if the one-sided limits differed. 2 and 1 are arithmetic errors in evaluating the pieces.",
       },
     ],
   },

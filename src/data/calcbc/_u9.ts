@@ -91,9 +91,9 @@ export default [
       {
         question: "Given $x(t)=e^t$, $y(t)=e^{2t}$, find $\\frac{d^2y}{dx^2}$.",
         options: ["2", "$2e^t$", "$4e^{2t}$", "$2e^{-t}$"],
-        answerIndex: 1,
+        answerIndex: 0,
         explanation:
-          "dy/dx = (2e^{2t})/(e^t) = 2e^t. d(2e^t)/dt = 2e^t. d²y/dx² = 2e^t / e^t... wait — divide by dx/dt = e^t: d²y/dx² = 2e^t / e^t = 2. Actually dy/dx = 2e^t, then d(dy/dx)/dt = 2e^t, divide by dx/dt = e^t gives 2. The answer is 2. The correct answer is index 0.",
+          "dy/dx = (2e^{2t})/(e^t) = 2e^t. Then d(2e^t)/dt = 2e^t. Divide by dx/dt = e^t: d²y/dx² = 2e^t / e^t = 2. Option B ($2e^t$) is only dy/dx, not the second derivative. C and D are incorrect applications of the formula.",
       },
     ],
   },

@@ -564,7 +564,7 @@ export default [
         problem:
           "Given that $f'(x)=3(x-1)(x+2)$, sketch a qualitative graph of f indicating all local extrema and concavity changes.",
         solution:
-          "$f'=0$ at $x=-2$ and $x=1$. Sign chart: $f'>0$ for $x<-2$, $f'<0$ for $-2<x<1$, $f'>0$ for $x>1$. So f has a local max at $x=-2$ and a local min at $x=1$. $f''=3(2x-1+2)=3(2x+1)=6x+3$: wait, expanding $f'=3(x^2+x-2)=3x^2+3x-6$, so $f''=6x+3$. $f''=0$ at $x=-\\frac{1}{2}$: inflection point. Concave down on $(-\\infty,-\\frac{1}{2})$, concave up on $(-\\frac{1}{2},\\infty)$.",
+          "$f'=0$ at $x=-2$ and $x=1$. Sign chart: $f'>0$ for $x<-2$, $f'<0$ for $-2<x<1$, $f'>0$ for $x>1$. So f has a local max at $x=-2$ and a local min at $x=1$. Expand: $f'=3(x^2+x-2)=3x^2+3x-6$, so $f''=6x+3$. $f''=0$ at $x=-\\frac{1}{2}$: inflection point. Concave down on $(-\\infty,-\\frac{1}{2})$, concave up on $(-\\frac{1}{2},\\infty)$.",
       },
     ],
     mcqs: [

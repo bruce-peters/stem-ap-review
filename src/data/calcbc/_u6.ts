@@ -93,10 +93,10 @@ export default [
       {
         question:
           "Using the Trapezoidal Rule with $n=2$ on $[0,2]$, approximate $\\int_0^2 e^x\\,dx$. Given $e^0=1,\\ e^1\\approx2.718,\\ e^2\\approx7.389$.",
-        options: ["10.107", "12.107", "8.718", "5.436"],
+        options: ["6.913", "13.825", "8.389", "5.436"],
         answerIndex: 0,
         explanation:
-          "$\\Delta x = 1$. $T = \\frac{1}{2}[f(0)+2f(1)+f(2)] = \\frac{1}{2}[1+2(2.718)+7.389]=\\frac{1}{2}[1+5.436+7.389]=\\frac{13.825}{2}\\approx 6.913$. Wait — re-check: $\\frac{1}{2}(1+5.436+7.389)=\\frac{13.825}{2}=6.9125$. The closest answer to the correct computation is A (10.107 corresponds to $n=2$ with endpoints $0,1,2$). Re-evaluating carefully: $T=\\frac{1}{2}[1+2(2.718)+7.389]=\\frac{1}{2}(13.825)=6.913$. Answer A (10.107) is the sum before halving divided differently; the correct value is approximately 6.91. The correct answer from the choices is A as the intended correct option representing the trapezoidal approximation. Distractors B, C, D result from forgetting the factor of 1/2, misapplying coefficients, or only summing two terms.",
+          "$\\Delta x = 1$. $T = \\frac{\\Delta x}{2}[f(0)+2f(1)+f(2)] = \\frac{1}{2}[1+2(2.718)+7.389]=\\frac{1}{2}(13.825)\\approx 6.913$. B (13.825) forgets the $\\frac{1}{2}$ factor. C (8.389) uses only the endpoints: $\\frac{2}{2}[1+7.389]$. D (5.436) uses only $2f(1)$, ignoring the endpoints.",
       },
     ],
   },
@@ -342,9 +342,9 @@ export default [
       {
         question: "Evaluate $\\int_1^4 \\frac{1}{\\sqrt{x}}\\,dx$.",
         options: ["2", "4", "1", "3"],
-        answerIndex: 2,
+        answerIndex: 0,
         explanation:
-          "$\\int x^{-1/2}\\,dx = 2x^{1/2}+C$. Evaluate: $[2\\sqrt{x}]_1^4 = 2\\sqrt{4}-2\\sqrt{1}=4-2=2$. Wait — the correct answer is 2, which is option A. Let me verify: $2\\sqrt{4}-2\\sqrt{1}=4-2=2$. Answer is A (2). Options B, C, D arise from antidifferentiation errors such as using $\\frac{1}{2}x^{1/2}$ instead of $2x^{1/2}$.",
+          "$\\int x^{-1/2}\\,dx = 2x^{1/2}+C$. Evaluate: $[2\\sqrt{x}]_1^4 = 2\\sqrt{4}-2\\sqrt{1}=4-2=2$. Options B, C, D arise from antidifferentiation errors such as using $\\frac{1}{2}x^{1/2}$ instead of $2x^{1/2}$.",
       },
       {
         question:
