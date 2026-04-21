@@ -24,6 +24,10 @@ interface AuthContextValue {
   /** Notes keyed by "subject:unitNumber" or "subject:all" */
   notes: Record<string, string>;
   saveNote: (key: string, text: string) => void;
+  /** MCQ practice test state keyed by subject */
+  practiceAnswers: Record<string, Record<number, number>>;
+  practiceSubmitted: Record<string, number[]>;
+  savePracticeState: (subject: string, answers: Record<number, number>, submitted: Set<number>) => void;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -38,6 +42,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     loadLocalIds("stem-review:starred")
   );
   const [notes, setNotes] = useState<Record<string, string>>({});
+  const [practiceAnswers, setPracticeAnswers] = useState<Record<string, Record<number, number>>>(() => {
+    try {
+      const s = localStorage.getItem("stem-review:practice_answers");
+      return s ? JSON.parse(s) : {};
+    } catch { return {}; }
+  });
+  const [practiceSubmitted, setPracticeSubmitted] = useState<Record<string, number[]>>(() => {
+    try {
+      const s = localStorage.getItem("stem-review:practice_submitted");
+      return s ? JSON.parse(s) : {};
+    } catch { return {}; }
+  });
 
   // Whether we're currently synced to the database (user logged in)
   const dbSynced = useRef(false);
@@ -98,11 +114,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     []
   );
 
+  /** Upsert MCQ practice state to Supabase */
+  const syncPracticeToDb = useCallback(
+    async (answers: Record<string, Record<number, number>>, submitted: Record<string, number[]>, userId: string) => {
+      await supabase.from("user_progress").upsert(
+        {
+          user_id: userId,
+          practice_answers: answers,
+          practice_submitted: submitted,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id" }
+      );
+    },
+    []
+  );
+
   /** Load progress from Supabase, merging localStorage data on first login */
   const loadFromDb = useCallback(async (userId: string) => {
     const { data, error } = await supabase
       .from("user_progress")
-      .select("completed_ids, starred_ids, notes")
+      .select("completed_ids, starred_ids, notes, practice_answers, practice_submitted")
       .eq("user_id", userId)
       .single();
     if (error && error.code !== "PGRST116") {
@@ -116,6 +148,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const dbCompleted = new Set<string>(data?.completed_ids ?? []);
     const dbStarred = new Set<string>(data?.starred_ids ?? []);
     const dbNotes: Record<string, string> = (data as { notes?: Record<string, string> } | null)?.notes ?? {};
+    const dbPracticeAnswers: Record<string, Record<number, number>> = (data as { practice_answers?: Record<string, Record<number, number>> } | null)?.practice_answers ?? {};
+    const dbPracticeSubmitted: Record<string, number[]> = (data as { practice_submitted?: Record<string, number[]> } | null)?.practice_submitted ?? {};
 
     // Merge localStorage into DB on first login (union)
     const mergedCompleted = new Set([...dbCompleted, ...localCompleted]);
@@ -124,6 +158,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setCompletedIds(mergedCompleted);
     setStarredIds(mergedStarred);
     setNotes(dbNotes);
+    setPracticeAnswers(dbPracticeAnswers);
+    setPracticeSubmitted(dbPracticeSubmitted);
     dbSynced.current = true;
 
     // Persist the merge back to DB if there was anything local to add
@@ -159,6 +195,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setCompletedIds(loadLocalIds("stem-review:reviewed"));
         setStarredIds(loadLocalIds("stem-review:starred"));
         setNotes({});
+        try {
+          const pa = localStorage.getItem("stem-review:practice_answers");
+          setPracticeAnswers(pa ? JSON.parse(pa) : {});
+          const ps = localStorage.getItem("stem-review:practice_submitted");
+          setPracticeSubmitted(ps ? JSON.parse(ps) : {});
+        } catch {
+          setPracticeAnswers({});
+          setPracticeSubmitted({});
+        }
       }
     });
 
@@ -212,6 +257,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [user, syncNotesToDb]
   );
 
+  const savePracticeState = useCallback(
+    (subject: string, answers: Record<number, number>, submitted: Set<number>) => {
+      setPracticeAnswers((prev) => {
+        const next = { ...prev, [subject]: answers };
+        if (user && dbSynced.current) {
+          setPracticeSubmitted((prevSub) => {
+            const nextSub = { ...prevSub, [subject]: [...submitted] };
+            syncPracticeToDb(next, nextSub, user.id);
+            return nextSub;
+          });
+        } else {
+          setPracticeSubmitted((prevSub) => {
+            const nextSub = { ...prevSub, [subject]: [...submitted] };
+            localStorage.setItem("stem-review:practice_answers", JSON.stringify(next));
+            localStorage.setItem("stem-review:practice_submitted", JSON.stringify(nextSub));
+            return nextSub;
+          });
+        }
+        return next;
+      });
+    },
+    [user, syncPracticeToDb]
+  );
+
   // ── auth actions ──────────────────────────────────────────────────────────
 
   const signUp = async (email: string, password: string): Promise<{ error: string | null }> => {
@@ -242,6 +311,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         toggleStarred,
         notes,
         saveNote,
+        practiceAnswers,
+        practiceSubmitted,
+        savePracticeState,
       }}
     >
       {children}

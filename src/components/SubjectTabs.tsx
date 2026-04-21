@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 
 import NotesSidebar from "@/components/NotesSidebar";
+import PracticeTest from "@/components/PracticeTest";
 import calcbc from "@/data/calcbc";
 import physics from "@/data/physics";
 import cs from "@/data/cs";
@@ -102,6 +103,7 @@ export default function SubjectTabs() {
   // null = show all, true = reviewed only, false = unreviewed only
   const [reviewFilter, setReviewFilter] = useState<boolean | null>(null);
   const [starFilter, setStarFilter] = useState(false);
+  const [mcqActive, setMcqActive] = useState(false);
 
   const currentSubject = SUBJECTS.find((s) => s.id === subject)!;
   const topics = currentSubject.data;
@@ -178,6 +180,7 @@ export default function SubjectTabs() {
                 setActiveTags(new Set());
                 setReviewFilter(null);
                 setStarFilter(false);
+                setMcqActive(false);
               }}
               className={cn(
                 "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
@@ -234,8 +237,8 @@ export default function SubjectTabs() {
         </div>
       </header>
 
-      {/* Search + tag filters */}
-      <div className="px-6 py-3 border-b border-border flex-shrink-0 flex flex-col gap-2">
+      {/* Search + tag filters — hidden in MCQ practice mode */}
+      <div className={cn("px-6 py-3 border-b border-border flex-shrink-0 flex flex-col gap-2", mcqActive && "hidden")}>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
           <Input
@@ -306,54 +309,66 @@ export default function SubjectTabs() {
 
       {/* Main content */}
       <div className="flex flex-1 min-h-0">
-        {topics.length > 0 && (
-          <UnitSidebar
-            topics={topics}
-            selectedUnit={selectedUnit}
-            onSelectUnit={setSelectedUnit}
-            reviewedIds={reviewedIds}
-          />
-        )}
+        {mcqActive ? (
+          <PracticeTest subject={subject} onBack={() => setMcqActive(false)} />
+        ) : (
+          <>
+            {topics.length > 0 && (
+              <UnitSidebar
+                topics={topics}
+                selectedUnit={selectedUnit}
+                onSelectUnit={(unit) => {
+                  setSelectedUnit(unit);
+                  setMcqActive(false);
+                }}
+                reviewedIds={reviewedIds}
+                mcqActive={mcqActive}
+                onSelectMCQ={() => setMcqActive(true)}
+                showMCQ={true}
+              />
+            )}
 
-        <main className="flex-1 min-w-0 overflow-y-auto">
-          {topics.length === 0 ? (
-            <EmptyState subject={currentSubject.label} />
-          ) : filtered.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-24 text-muted-foreground gap-2">
-              <Search className="w-8 h-8 opacity-40" />
-              <p className="text-sm">No topics match your search.</p>
-            </div>
-          ) : (
-            <div className="p-6">
-              <p className="text-xs text-muted-foreground mb-4">
-                {filtered.length} topic{filtered.length !== 1 ? "s" : ""}
-                {selectedUnit !== null && ` in Unit ${selectedUnit}`}
-                {search && ` matching "${search}"`}
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-                {filtered.map((topic) => (
-                  <TopicCard
-                    key={topic.id}
-                    topic={topic}
-                    onClick={() => openCard(topic)}
-                    isReviewed={reviewedIds.has(topic.id)}
-                    isStarred={starredIds.has(topic.id)}
-                    isCS={subject === "cs"}
-                    onToggleStarred={() => toggleStarred(topic.id)}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-        </main>
+            <main className="flex-1 min-w-0 overflow-y-auto">
+              {topics.length === 0 ? (
+                <EmptyState subject={currentSubject.label} />
+              ) : filtered.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-24 text-muted-foreground gap-2">
+                  <Search className="w-8 h-8 opacity-40" />
+                  <p className="text-sm">No topics match your search.</p>
+                </div>
+              ) : (
+                <div className="p-6">
+                  <p className="text-xs text-muted-foreground mb-4">
+                    {filtered.length} topic{filtered.length !== 1 ? "s" : ""}
+                    {selectedUnit !== null && ` in Unit ${selectedUnit}`}
+                    {search && ` matching "${search}"`}
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+                    {filtered.map((topic) => (
+                      <TopicCard
+                        key={topic.id}
+                        topic={topic}
+                        onClick={() => openCard(topic)}
+                        isReviewed={reviewedIds.has(topic.id)}
+                        isStarred={starredIds.has(topic.id)}
+                        isCS={subject === "cs"}
+                        onToggleStarred={() => toggleStarred(topic.id)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </main>
 
-        {notesOpen && topics.length > 0 && !sheetOpen && (
-          <NotesSidebar
-            noteKey={noteKey}
-            unitLabel={noteUnitLabel}
-            value={notes[noteKey] ?? ""}
-            onSave={saveNote}
-          />
+            {notesOpen && topics.length > 0 && !sheetOpen && (
+              <NotesSidebar
+                noteKey={noteKey}
+                unitLabel={noteUnitLabel}
+                value={notes[noteKey] ?? ""}
+                onSave={saveNote}
+              />
+            )}
+          </>
         )}
       </div>
 

@@ -1,12 +1,16 @@
 import type { Topic } from "@/types";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { ClipboardList } from "lucide-react";
 
 interface UnitSidebarProps {
   topics: Topic[];
   selectedUnit: number | null;
   onSelectUnit: (unit: number | null) => void;
   reviewedIds: Set<string>;
+  mcqActive?: boolean;
+  onSelectMCQ?: () => void;
+  showMCQ?: boolean;
 }
 
 function getUnits(topics: Topic[], reviewedIds: Set<string>) {
@@ -41,6 +45,9 @@ export default function UnitSidebar({
   selectedUnit,
   onSelectUnit,
   reviewedIds,
+  mcqActive = false,
+  onSelectMCQ,
+  showMCQ = false,
 }: UnitSidebarProps) {
   const units = getUnits(topics, reviewedIds);
   const totalReviewed = topics.filter((t) => reviewedIds.has(t.id)).length;
@@ -82,6 +89,20 @@ export default function UnitSidebar({
               {topics.length}
             </span>
           </button>
+          {showMCQ && (
+            <button
+              onClick={() => onSelectMCQ?.()}
+              className={cn(
+                "w-full flex items-center gap-2 px-4 py-2 text-sm transition-colors rounded-none text-left",
+                mcqActive
+                  ? "bg-accent text-foreground font-medium"
+                  : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+              )}
+            >
+              <ClipboardList className="w-3.5 h-3.5 flex-shrink-0" />
+              <span>MCQ Practice</span>
+            </button>
+          )}
           {units.map(([num, { label, count, reviewed }]) => (
             <button
               key={num}
