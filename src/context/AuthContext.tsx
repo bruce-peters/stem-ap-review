@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   /** Upsert completed/starred progress to Supabase */
   const syncProgressToDb = useCallback(
     async (completed: Set<string>, starred: Set<string>, userId: string) => {
-      await supabase.from("user_progress").upsert(
+      const { error } = await supabase.from("user_progress").upsert(
         {
           user_id: userId,
           completed_ids: [...completed],
@@ -74,6 +74,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         },
         { onConflict: "user_id" }
       );
+      if (error) {
+        console.error("[stem-review] syncProgressToDb failed:", error);
+        // Fall back to localStorage so progress isn't lost
+        saveLocal(completed, starred);
+      }
     },
     []
   );
@@ -95,11 +100,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   /** Load progress from Supabase, merging localStorage data on first login */
   const loadFromDb = useCallback(async (userId: string) => {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("user_progress")
       .select("completed_ids, starred_ids, notes")
       .eq("user_id", userId)
       .single();
+    if (error && error.code !== "PGRST116") {
+      // PGRST116 = no rows found (expected for new users), anything else is real
+      console.error("[stem-review] loadFromDb failed:", error);
+    }
 
     const localCompleted = loadLocalIds("stem-review:reviewed");
     const localStarred = loadLocalIds("stem-review:starred");
