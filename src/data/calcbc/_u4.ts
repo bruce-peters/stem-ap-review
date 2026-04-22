@@ -157,6 +157,17 @@ export default [
     summary:
       "The tangent line at a point uses the derivative as its slope; the normal line is perpendicular to the tangent.",
     formula: "y-f(a)=f'(a)(x-a)",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "x*x*x - x", color: "blue", label: "f(x)" },
+        { fn: "2*x - 2", color: "red", label: "tangent at x=1" },
+        { fn: "-0.5*x + 0.5", color: "green", label: "normal at x=1" },
+      ],
+      xDomain: [-2, 2.5],
+      yDomain: [-2.5, 2.5],
+      note: "At x=1: f(1)=0, f'(1)=2. Tangent slope=2, normal slope=−½. Tangent and normal are perpendicular.",
+    },
     description:
       "The tangent line to y = f(x) at x = a has slope f'(a) and passes through the point (a, f(a)), giving the point-slope equation y − f(a) = f'(a)(x − a). The normal line at the same point is perpendicular to the tangent, so its slope is the negative reciprocal −1/f'(a) (provided f'(a) ≠ 0). Both lines are used extensively in FRQ problems to approximate function values or to find intersection points.",
     steps: [
@@ -202,6 +213,16 @@ export default [
     summary:
       "The linearization of f at x = a uses the tangent line to estimate nearby function values.",
     formula: "L(x)=f(a)+f'(a)(x-a)",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "Math.sqrt(Math.max(x,0))", color: "blue", label: "f(x) = √x" },
+        { fn: "x/4 + 1", color: "red", label: "L(x) ≈ 2 + (x−4)/4" },
+      ],
+      xDomain: [0, 8],
+      yDomain: [0, 3.5],
+      note: "Linear approximation (tangent line) at x=4: L(x) = 2 + (x−4)/4. Accurate near x=4, diverges further away.",
+    },
     description:
       "Because a differentiable function looks like a straight line when zoomed in near a point, the tangent line L(x) = f(a) + f'(a)(x − a) gives a good approximation of f(x) for x close to a. This is called local linearity or linearization. The approximation is an overestimate when f is concave down (f'' < 0) and an underestimate when f is concave up (f'' > 0) near x = a.",
     steps: [
@@ -247,6 +268,16 @@ export default [
       "L'Hôpital's Rule resolves indeterminate limits of the form 0/0 or ∞/∞ by differentiating numerator and denominator separately.",
     formula:
       "\\lim_{x\\to a}\\frac{f(x)}{g(x)}=\\lim_{x\\to a}\\frac{f'(x)}{g'(x)}",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "Math.sin(x)", color: "blue", label: "sin(x)" },
+        { fn: "x", color: "red", label: "x" },
+      ],
+      xDomain: [-2, 2],
+      yDomain: [-1.5, 1.5],
+      note: "Both sin(x) and x pass through 0 with slope 1, so sin(x)/x → 1 as x→0. L'Hôpital: (cos x)/1 = 1.",
+    },
     description:
       "If substituting x = a into f(x)/g(x) yields the indeterminate form 0/0 or ±∞/∞, then — provided f and g are differentiable near a and g'(x) ≠ 0 near a — the limit equals the limit of f'(x)/g'(x). The rule may be applied repeatedly if the result is still indeterminate. Other indeterminate forms (0·∞, 1^∞, 0^0, ∞^0) must first be rewritten as 0/0 or ∞/∞ before applying the rule.",
     steps: [
@@ -442,6 +473,61 @@ export default [
         answerIndex: 0,
         explanation:
           "The units of a derivative $dP/dt$ are (units of P) divided by (units of t): thousands of people per year. Option (B) gives units of P, not its derivative. Option (C) inverts the ratio. Option (D) scrambles both numerator and denominator.",
+      },
+    ],
+  },
+  {
+    id: "differentials",
+    name: "Differentials (dy and dx)",
+    unit: "Unit 4: Contextual Applications of Differentiation",
+    unitNumber: 4,
+    tags: ["FRQ"],
+    summary:
+      "Differentials dy and dx formalize the approximation $dy \\approx f'(x)\\,dx$, useful for estimating how much a function changes.",
+    formula: "dy = f'(x)\\,dx",
+    description:
+      "If $y = f(x)$ and $x$ changes by a small amount $dx$, the differential $dy = f'(x)\\,dx$ approximates the actual change $\\Delta y = f(x + dx) - f(x)$. This is the linear approximation rewritten in differential notation. Differentials appear in integration (where $dx$ is the differential of $x$), error estimation, and propagation-of-error problems on FRQs. The key insight is that $dy$ and $\\Delta y$ agree to first order when $dx$ is small.",
+    steps: [
+      "Write $y = f(x)$ and differentiate to find $f'(x)$.",
+      "Identify the base value $x$ and the small change $dx$ (often given as an error or increment).",
+      "Compute $dy = f'(x)\\,dx$ — this is the approximate change in $y$.",
+      "For error propagation: if measurement $x$ has error $|dx|$, the induced error in $y$ is $|dy| = |f'(x)||dx|$.",
+      "Compare $dy$ (approximate change) to $\\Delta y = f(x + dx) - f(x)$ (exact change) if accuracy is asked.",
+    ],
+    examples: [
+      {
+        problem:
+          "The side of a square is measured as $s = 5$ cm with a possible error of $ds = 0.1$ cm. Estimate the error in the computed area $A = s^2$.",
+        solution:
+          "$A = s^2$, so $dA = 2s\\,ds = 2(5)(0.1) = 1$ cm². The exact change is $\\Delta A = (5.1)^2 - 25 = 1.01$ cm², confirming that the differential gives a close approximation.",
+      },
+    ],
+    mcqs: [
+      {
+        question:
+          "If $y = \\sin x$ and $x$ increases from $0$ to $0.04$ radians, the differential $dy$ equals:",
+        options: [
+          "$0.04$",
+          "$\\sin(0.04)$",
+          "$0.04\\cos(0.04)$",
+          "$0.0016$",
+        ],
+        answerIndex: 0,
+        explanation:
+          "$dy = \\cos(x)\\,dx = \\cos(0)(0.04) = 1 \\cdot 0.04 = 0.04$. Option B is the exact value $\\sin(0.04) \\approx 0.03999$, not the differential (which uses the derivative at $x = 0$, not $x = 0.04$). Option C uses $\\cos(0.04)$ instead of $\\cos(0)$. Option D squares $dx$, which would be a second-order term.",
+      },
+      {
+        question:
+          "The radius of a sphere is measured as $r = 10$ cm with error $dr = 0.5$ cm. The approximate error in the volume $V = \\frac{4}{3}\\pi r^3$ is:",
+        options: [
+          "$200\\pi$ cm³",
+          "$20\\pi$ cm³",
+          "$100\\pi$ cm³",
+          "$400\\pi$ cm³",
+        ],
+        answerIndex: 0,
+        explanation:
+          "$dV = 4\\pi r^2\\,dr = 4\\pi(10)^2(0.5) = 200\\pi$ cm³. Option B uses $r = 10$ without squaring (giving $4\\pi\\cdot10\\cdot0.5 = 20\\pi$). Option C drops the factor $dr = 0.5$. Option D doubles the correct answer without justification.",
       },
     ],
   },

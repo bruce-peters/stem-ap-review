@@ -9,6 +9,15 @@ export const energyTopics: Topic[] = [
     tags: ["MCQ frequent"],
     summary: "Energy possessed by an object due to its motion.",
     formula: "K = \\frac{1}{2}mv^2",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "0.5 * x * x", color: "blue", label: "KE = ½mv²" },
+      ],
+      xDomain: [0, 4],
+      yDomain: [-0.5, 8],
+      note: "Kinetic energy grows as v² — doubling speed quadruples KE.",
+    },
     description: "Kinetic energy is the energy an object has because it is moving. It depends on both the mass of the object and the square of its velocity. Doubling the velocity quadruples the kinetic energy. Kinetic energy is always positive and is a scalar quantity.",
     steps: [
       "Identify the mass $m$ of the object in kilograms.",
@@ -45,6 +54,15 @@ export const energyTopics: Topic[] = [
     tags: ["MCQ frequent"],
     summary: "Stored energy due to an object's position in a gravitational field.",
     formula: "U_g = mgy",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "x", color: "green", label: "PE = mgh" },
+      ],
+      xDomain: [0, 5],
+      yDomain: [-0.5, 5.5],
+      note: "Gravitational PE increases linearly with height. Slope = mg (weight).",
+    },
     description: "Gravitational potential energy is the energy stored in an object as a result of its vertical position or height above a reference level. Near Earth's surface, we use $g = 9.8$ m/s². The reference point (where $U_g = 0$) can be chosen arbitrarily. Only changes in potential energy have physical significance.",
     steps: [
       "Choose a reference level where gravitational potential energy equals zero (typically ground level).",
@@ -86,6 +104,16 @@ export const energyTopics: Topic[] = [
     tags: ["MCQ frequent"],
     summary: "Energy stored in a compressed or stretched spring.",
     formula: "U_s = \\frac{1}{2}kx^2",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "x*x", color: "orange", label: "PE = ½kx²" },
+        { fn: "2 * Math.abs(x)", color: "red", label: "|F| = k|x|" },
+      ],
+      xDomain: [-2.5, 2.5],
+      yDomain: [-0.3, 6],
+      note: "Spring PE (k=2): parabolic. Restoring force magnitude grows linearly with displacement. PE is minimum at equilibrium.",
+    },
     description: "Elastic potential energy is stored when a spring is compressed or stretched from its equilibrium position. The spring constant $k$ measures the stiffness of the spring. The displacement $x$ is measured from the relaxed (natural) length. Energy is quadratic in displacement, so doubling the compression quadruples the stored energy.",
     steps: [
       "Identify the spring constant $k$ in N/m from the problem or from Hooke's law data.",
@@ -234,6 +262,16 @@ export const energyTopics: Topic[] = [
     tags: ["MCQ frequent", "FRQ", "theorem"],
     summary: "In the absence of non-conservative forces, total mechanical energy remains constant.",
     formula: "E_{\\text{mech}} = K + U = \\text{constant (no friction)}",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "2 * x", color: "red", label: "PE = mgh" },
+        { fn: "10 - 2*x", color: "blue", label: "KE = E − PE" },
+      ],
+      xDomain: [0, 5.5],
+      yDomain: [-0.5, 11],
+      note: "As object falls (height h decreases), PE converts to KE. Total E = KE + PE = 10 J remains constant.",
+    },
     description: "When only conservative forces (gravity, springs) do work, the sum of kinetic and potential energies remains constant. This means energy transforms between forms but the total stays the same. Mechanical energy conservation provides a powerful shortcut for solving problems involving heights, speeds, and springs without tracking forces through complex paths. Non-conservative forces like friction violate this conservation.",
     steps: [
       "Identify the system and confirm only conservative forces act (no friction, air resistance, etc.).",

@@ -536,4 +536,59 @@ export default [
       },
     ],
   },
+  {
+    id: "newton-cooling",
+    name: "Newton's Law of Cooling",
+    unit: "Unit 7: Differential Equations",
+    unitNumber: 7,
+    tags: ["MCQ frequent", "FRQ"],
+    summary:
+      "Newton's Law of Cooling states that an object's rate of temperature change is proportional to the difference between its temperature and the ambient temperature.",
+    formula: "\\frac{dT}{dt} = k(T - T_a),\\quad k < 0",
+    description:
+      "Newton's Law of Cooling models the temperature $T(t)$ of an object as it approaches ambient temperature $T_a$. The separable DE $\\frac{dT}{dt} = k(T - T_a)$ (with $k < 0$ for cooling) has solution $T(t) = T_a + (T_0 - T_a)e^{kt}$, where $T_0 = T(0)$ is the initial temperature. As $t \\to \\infty$, $T(t) \\to T_a$ exponentially. A second temperature reading at a known time determines $k$. The same model applies to warming ($k > 0$) when an object is placed in a warmer environment.",
+    steps: [
+      "Write $\\frac{dT}{dt} = k(T - T_a)$. Substitute $u = T - T_a$ so $\\frac{du}{dt} = ku$.",
+      "Solve: $u(t) = u_0 e^{kt}$, where $u_0 = T_0 - T_a$.",
+      "Back-substitute: $T(t) = T_a + (T_0 - T_a)e^{kt}$.",
+      "Use the initial temperature $T(0) = T_0$ and a second data point $(t_1, T_1)$ to solve for $k$: $T_1 - T_a = (T_0 - T_a)e^{kt_1}$.",
+      "Answer contextual questions: find $T$ at a given time, or find the time when $T$ reaches a target value by solving $T(t) = $ target.",
+    ],
+    examples: [
+      {
+        problem:
+          "A cup of coffee at $90^\\circ$C is placed in a $20^\\circ$C room. After 10 minutes the coffee is $70^\\circ$C. Find the temperature function $T(t)$.",
+        solution:
+          "$T(t) = 20 + (90-20)e^{kt} = 20 + 70e^{kt}$. At $t=10$: $70 = 20 + 70e^{10k} \\Rightarrow 50 = 70e^{10k} \\Rightarrow k = \\frac{1}{10}\\ln\\!\\left(\\frac{5}{7}\\right) \\approx -0.0336$. So $T(t) = 20 + 70e^{-0.0336t}$.",
+      },
+    ],
+    mcqs: [
+      {
+        question:
+          "For Newton's Law of Cooling $\\frac{dT}{dt} = k(T - T_a)$ with $k < 0$, as $t \\to \\infty$ the temperature $T(t)$:",
+        options: [
+          "Decreases to $0^\\circ$",
+          "Approaches the ambient temperature $T_a$",
+          "Grows without bound",
+          "Oscillates around $T_a$",
+        ],
+        answerIndex: 1,
+        explanation:
+          "The solution is $T(t) = T_a + (T_0-T_a)e^{kt}$. Because $k<0$, $e^{kt}\\to 0$ as $t\\to\\infty$, so $T\\to T_a$. The object approaches room temperature — it does not drop to $0^\\circ$ (unless $T_a = 0$), grow without bound, or oscillate.",
+      },
+      {
+        question:
+          "An object cools from $100^\\circ$C to $80^\\circ$C in 5 minutes in a $20^\\circ$C room. What is the temperature after a total of 10 minutes?",
+        options: [
+          "$60^\\circ$C",
+          "$65^\\circ$C",
+          "$68^\\circ$C",
+          "$72^\\circ$C",
+        ],
+        answerIndex: 1,
+        explanation:
+          "$T(t) = 20 + 80e^{kt}$. At $t=5$: $80 = 20 + 80e^{5k} \\Rightarrow 60 = 80e^{5k} \\Rightarrow e^{5k} = 3/4$. At $t=10$: $T = 20 + 80(e^{5k})^2 = 20 + 80\\left(\\frac{3}{4}\\right)^2 = 20 + 80\\cdot\\frac{9}{16} = 20 + 45 = 65^\\circ$C. Option A ($60^\\circ$C) assumes arithmetic (linear) cooling. Option C ($68^\\circ$C) and D ($72^\\circ$C) overestimate the temperature.",
+      },
+    ],
+  },
 ];

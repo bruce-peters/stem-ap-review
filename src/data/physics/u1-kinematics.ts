@@ -209,6 +209,15 @@ export const kinematicsTopics: Topic[] = [
     summary:
       "Relates final velocity to initial velocity, acceleration, and time.",
     formula: "v = v_0 + at",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "1 + 0.5*x", color: "blue", label: "v(t) = v₀ + at" },
+      ],
+      xDomain: [-1, 5],
+      yDomain: [-0.5, 4],
+      note: "Linear velocity vs time for constant acceleration (v₀=1, a=0.5). Slope = acceleration.",
+    },
     description:
       "This equation relates the final velocity $v$ of an object to its initial velocity $v_0$, constant acceleration $a$, and elapsed time $t$. It is derived from the definition of acceleration and applies only when acceleration is constant. Use this equation when displacement is not needed or not given. The equation shows that velocity changes linearly with time under constant acceleration.",
     steps: [
@@ -259,6 +268,15 @@ export const kinematicsTopics: Topic[] = [
     summary:
       "Calculates position as a function of time under constant acceleration.",
     formula: "x = x_0 + v_0 t + \\frac{1}{2}at^2",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "x + 0.25*x*x", color: "blue", label: "x(t) = v₀t + ½at²" },
+      ],
+      xDomain: [-0.5, 4],
+      yDomain: [-0.5, 8],
+      note: "Parabolic position vs time for constant acceleration (v₀=1, a=0.5). Concave up when a > 0.",
+    },
     description:
       "This equation gives the position $x$ of an object at time $t$ when it starts at position $x_0$ with initial velocity $v_0$ and undergoes constant acceleration $a$. The first term is the initial position, the second term is the displacement due to constant initial velocity, and the third term accounts for the additional displacement due to acceleration. Use this equation when you need to find displacement or time and do not have final velocity.",
     steps: [
@@ -353,6 +371,17 @@ export const kinematicsTopics: Topic[] = [
     tags: ["MCQ frequent", "FRQ"],
     summary:
       "Motion graphs visually represent position, velocity, and acceleration as functions of time, with slopes and areas providing key kinematic information.",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "0.5 * x * x", color: "blue", label: "x(t) = ½at²" },
+        { fn: "x", color: "green", label: "v(t) = at" },
+        { fn: "1", color: "orange", label: "a(t) = const" },
+      ],
+      xDomain: [0, 3],
+      yDomain: [-0.5, 4.5],
+      note: "Constant acceleration (a=1, v₀=0): position is parabolic, velocity is linear, acceleration is constant.",
+    },
     description:
       "Position-time (x-t) graphs plot position vs. time; the slope at any point is the instantaneous velocity. Velocity-time (v-t) graphs plot velocity vs. time; the slope is acceleration, and the area under the curve is displacement. Acceleration-time (a-t) graphs plot acceleration vs. time; the area under the curve is the change in velocity. Understanding these relationships allows you to extract complete motion information from graphs and is essential for FRQs.",
     steps: [
@@ -501,6 +530,15 @@ export const kinematicsTopics: Topic[] = [
       "Projectiles move in two dimensions with constant horizontal velocity and constant downward acceleration due to gravity.",
     formula:
       "x = v_{x0}t,\\quad y = v_{y0}t - \\frac{1}{2}gt^2",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "x - x*x/20", color: "blue", label: "y(x)" },
+      ],
+      xDomain: [-0.5, 21],
+      yDomain: [-1, 6],
+      note: "Projectile path (v₀=10 m/s, θ=45°, g=10 m/s²). Max height ≈ 2.5 m at x = 10 m. Range = 20 m.",
+    },
     description:
       "Projectile motion is two-dimensional motion under gravity alone. The key insight is that horizontal and vertical motions are independent. Horizontally, velocity is constant ($v_x = v_{x0}$, $a_x = 0$). Vertically, acceleration is $a_y = -g$ (if up is positive). The trajectory is a parabola. Time is the common variable linking both dimensions. Projectile problems require resolving initial velocity into components, analyzing each dimension separately, and recombining results.",
     steps: [

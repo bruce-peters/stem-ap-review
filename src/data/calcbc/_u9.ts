@@ -8,6 +8,14 @@ export default [
     summary:
       "The slope of a parametric curve at any point is dy/dx = (dy/dt) / (dx/dt).",
     formula: "\\frac{dy}{dx}=\\frac{dy/dt}{dx/dt}",
+    graph: {
+      type: "parametric",
+      xy: "[t*t, t*t*t - 3*t]",
+      tDomain: [-2.1, 2.1],
+      xDomain: [-0.4, 4.6],
+      yDomain: [-2.8, 2.8],
+      note: "x(t) = t², y(t) = t³ − 3t. The curve crosses itself at (1, 0) since t = ±1 both give x = 1, y = 0. Slope dy/dx = (3t²−3)/(2t).",
+    },
     description:
       "For a curve defined parametrically by x(t) and y(t), the derivative dy/dx measures the slope of the curve as a function of the parameter t. You divide dy/dt by dx/dt, provided dx/dt is nonzero. This formula allows calculus techniques for Cartesian curves to be applied to parametric ones.",
     steps: [
@@ -58,6 +66,16 @@ export default [
     summary:
       "The second derivative of a parametric curve is found by differentiating dy/dx with respect to t, then dividing by dx/dt.",
     formula: "\\frac{d^2y}{dx^2}=\\frac{d(dy/dx)/dt}{dx/dt}",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "x*x - x", color: "blue", label: "y = x²−x" },
+        { fn: "2*x - 1", color: "red", label: "dy/dx = 2x−1" },
+      ],
+      xDomain: [-0.5, 2],
+      yDomain: [-0.5, 2.5],
+      note: "Parametric curve x=t, y=t²−t traces a parabola. d²y/dx² = (d/dt[dy/dx])/(dx/dt) = 2/1 = 2 > 0 everywhere — concave up.",
+    },
     description:
       "To find concavity and inflection points for parametric curves, you need d²y/dx². This is NOT (d²y/dt²)/(d²x/dt²); instead, you differentiate the already-computed dy/dx with respect to t and divide by dx/dt again. This two-step chain-rule application is a common FRQ target.",
     steps: [
@@ -106,6 +124,14 @@ export default [
     summary:
       "The arc length of a parametric curve from t = a to t = b is the integral of the speed.",
     formula: "L=\\int_a^b\\!\\sqrt{(x')^2+(y')^2}\\,dt",
+    graph: {
+      type: "parametric",
+      xy: "[Math.cos(t), Math.sin(t)]",
+      tDomain: [0, 6.284],
+      xDomain: [-1.4, 1.4],
+      yDomain: [-1.4, 1.4],
+      note: "Circle x(t)=cos(t), y(t)=sin(t). Arc length = ∫₀²π√((dx/dt)²+(dy/dt)²) dt = ∫₀²π 1 dt = 2π.",
+    },
     description:
       "Arc length for a parametric curve integrates the magnitude of the velocity vector over the parameter interval. The integrand √((dx/dt)² + (dy/dt)²) is simply the speed. This formula extends naturally to vector-valued functions and is frequently evaluated with a calculator on the AP exam.",
     steps: [
@@ -216,6 +242,14 @@ export default [
     summary:
       "The velocity vector is the first derivative of position and the acceleration vector is the second derivative.",
     formula: "\\vec{v}=\\vec{r}'(t),\\quad\\vec{a}=\\vec{r}''(t)",
+    graph: {
+      type: "parametric",
+      xy: "[Math.cos(t), Math.sin(t)]",
+      tDomain: [0, 6.284],
+      xDomain: [-1.5, 1.5],
+      yDomain: [-1.5, 1.5],
+      note: "Circular path: position (cos t, sin t). Velocity = (−sin t, cos t), tangent to circle. Acceleration = (−cos t, −sin t), pointing inward (centripetal).",
+    },
     description:
       "For a particle with position r(t) = ⟨x(t), y(t)⟩, the velocity vector v(t) = r'(t) = ⟨x'(t), y'(t)⟩ gives both direction of motion and rate of change of position. The acceleration vector a(t) = r''(t) = ⟨x''(t), y''(t)⟩ describes how velocity changes. The direction of v(t) is tangent to the path.",
     steps: [
@@ -376,6 +410,14 @@ export default [
     summary:
       "Polar coordinates describe a point by its distance r from the origin and angle θ from the positive x-axis.",
     formula: "x=r\\cos\\theta,\\quad y=r\\sin\\theta",
+    graph: {
+      type: "parametric",
+      xy: "[(1 + Math.cos(t)) * Math.cos(t), (1 + Math.cos(t)) * Math.sin(t)]",
+      tDomain: [0, 6.284],
+      xDomain: [-2.3, 2.3],
+      yDomain: [-1.8, 1.8],
+      note: "Cardioid r = 1 + cos(θ). At θ=0: r=2 (rightmost point). At θ=π: r=0 (touches origin). Symmetric about x-axis.",
+    },
     description:
       "In polar coordinates, a point is represented as (r, θ) where r is the radial distance and θ is the angle measured counterclockwise from the positive x-axis. Converting between polar and Cartesian uses x = r cos θ, y = r sin θ, and r² = x² + y². Many curves with circular or rotational symmetry have simpler polar equations.",
     steps: [
@@ -475,6 +517,14 @@ export default [
     summary:
       "The area enclosed by a polar curve r = f(θ) from θ = α to θ = β is one-half the integral of r².",
     formula: "A=\\frac{1}{2}\\int_\\alpha^\\beta [r(\\theta)]^2\\,d\\theta",
+    graph: {
+      type: "parametric",
+      xy: "[Math.cos(2*t) * Math.cos(t), Math.cos(2*t) * Math.sin(t)]",
+      tDomain: [0, 6.284],
+      xDomain: [-1.3, 1.3],
+      yDomain: [-1.3, 1.3],
+      note: "Rose curve r = cos(2θ) — 4 petals. Area of one petal = ½∫cos²(2θ)dθ = π/8. Total enclosed area = π/2.",
+    },
     description:
       "Unlike Cartesian area, polar area is derived by summing thin circular sectors of angle dθ and radius r, each with area ½r² dθ. The factor of ½ is crucial and often overlooked. The limits α and β must be chosen carefully to trace the desired region exactly once without overlap.",
     steps: [
@@ -524,6 +574,16 @@ export default [
       "The area between two polar curves is the integral of half the difference of the squares of the outer and inner radii.",
     formula:
       "A=\\frac{1}{2}\\int_\\alpha^\\beta \\bigl[r_1^2-r_2^2\\bigr]\\,d\\theta",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "1 + Math.cos(x)", color: "blue", label: "r = 1+cos(θ)" },
+        { fn: "1", color: "red", label: "r = 1 (circle)" },
+      ],
+      xDomain: [0, 6.284],
+      yDomain: [-0.3, 2.3],
+      note: "r vs θ plot: area between r=1+cos(θ) and r=1 is found by ½∫[(1+cosθ)²−1²]dθ over the region where 1+cosθ≥1, i.e., 0≤θ≤π.",
+    },
     description:
       "When two polar curves r₁(θ) (outer) and r₂(θ) (inner) bound a region, the enclosed area is found by subtracting the inner sector from the outer sector at each angle. It is essential to identify which curve is outer (larger r) and to find the angles α and β where the curves intersect. Intersection points may require checking r = 0 separately.",
     steps: [

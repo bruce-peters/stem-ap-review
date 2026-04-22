@@ -769,6 +769,26 @@ export default [
     summary:
       "A Taylor polynomial of degree $n$ approximates a function near $x = a$ using derivatives at that point.",
     formula: "P_n(x)=\\sum_{k=0}^n\\frac{f^{(k)}(a)}{k!}(x-a)^k",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "Math.sin(x)", color: "white", label: "sin(x) — exact" },
+        { fn: "x", color: "red", label: "P₁(x) = x" },
+        {
+          fn: "x - Math.pow(x,3)/6",
+          color: "orange",
+          label: "P₃(x) = x − x³/6",
+        },
+        {
+          fn: "x - Math.pow(x,3)/6 + Math.pow(x,5)/120",
+          color: "green",
+          label: "P₅(x) = x − x³/6 + x⁵/120",
+        },
+      ],
+      xDomain: [-5, 5],
+      yDomain: [-2.5, 2.5],
+      note: "Higher-degree Taylor polynomials approximate sin(x) accurately over a wider interval centered at 0.",
+    },
     description:
       "The degree-$n$ Taylor polynomial of $f$ centered at $a$ is $P_n(x) = f(a) + f'(a)(x-a) + \\dfrac{f''(a)}{2!}(x-a)^2 + \\cdots + \\dfrac{f^{(n)}(a)}{n!}(x-a)^n$. It matches $f$ and its first $n$ derivatives at $x = a$. Centered at $a = 0$, it is called a Maclaurin polynomial.",
     steps: [
@@ -823,6 +843,26 @@ export default [
       "Memorize the Maclaurin series for $e^x$, $\\sin x$, $\\cos x$, and $1/(1-x)$; they form the basis for many series problems.",
     formula:
       "e^x=\\sum_{n=0}^\\infty\\frac{x^n}{n!},\\quad\\sin x=\\sum_{n=0}^\\infty\\frac{(-1)^n x^{2n+1}}{(2n+1)!}",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "Math.exp(x)", color: "white", label: "eˣ — exact" },
+        { fn: "1 + x", color: "red", label: "P₁ = 1 + x" },
+        {
+          fn: "1 + x + x*x/2",
+          color: "orange",
+          label: "P₂ = 1 + x + x²/2",
+        },
+        {
+          fn: "1 + x + x*x/2 + x*x*x/6",
+          color: "green",
+          label: "P₃ = 1 + x + x²/2 + x³/6",
+        },
+      ],
+      xDomain: [-3, 2.5],
+      yDomain: [-0.5, 7],
+      note: "Maclaurin polynomials of eˣ. Higher degrees match the curve over a wider interval. The series converges for all x.",
+    },
     description:
       "The four essential Maclaurin series are: $e^x = \\sum x^n/n!$ (converges everywhere), $\\sin x = \\sum (-1)^n x^{2n+1}/(2n+1)!$ (converges everywhere), $\\cos x = \\sum (-1)^n x^{2n}/(2n)!$ (converges everywhere), and $\\dfrac{1}{1-x} = \\sum x^n$ ($|x|<1$). These are foundational for substitution and manipulation problems.",
     steps: [

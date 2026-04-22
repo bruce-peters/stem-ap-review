@@ -901,4 +901,113 @@ export default [
       },
     ],
   },
+  {
+    id: "trig-substitution",
+    name: "Trigonometric Substitution",
+    unit: "Unit 6: Integration and Accumulation of Change",
+    unitNumber: 6,
+    tags: ["BC only", "FRQ"],
+    summary:
+      "Trig substitution replaces expressions like $\\sqrt{a^2-x^2}$ with trig functions to eliminate radicals and convert to a standard trig integral.",
+    formula:
+      "\\sqrt{a^2-x^2}:\\;x=a\\sin\\theta,\\quad\\sqrt{a^2+x^2}:\\;x=a\\tan\\theta,\\quad\\sqrt{x^2-a^2}:\\;x=a\\sec\\theta",
+    description:
+      "When an integrand contains $\\sqrt{a^2 - x^2}$, $\\sqrt{a^2 + x^2}$, or $\\sqrt{x^2 - a^2}$, a trigonometric substitution eliminates the radical via a Pythagorean identity. The three cases are: $x = a\\sin\\theta$ for $\\sqrt{a^2-x^2}$, $x = a\\tan\\theta$ for $\\sqrt{a^2+x^2}$, and $x = a\\sec\\theta$ for $\\sqrt{x^2-a^2}$. After integrating in $\\theta$, convert back to $x$ using a reference right triangle. The AP BC exam tests this technique particularly on definite integrals with a geometric interpretation (area of a circle or ellipse).",
+    steps: [
+      "Identify the radical form and choose: $x = a\\sin\\theta$ for $\\sqrt{a^2-x^2}$, $x = a\\tan\\theta$ for $\\sqrt{a^2+x^2}$, $x = a\\sec\\theta$ for $\\sqrt{x^2-a^2}$.",
+      "Compute $dx$ in terms of $d\\theta$. For $x=a\\sin\\theta$: $dx = a\\cos\\theta\\,d\\theta$.",
+      "Substitute and simplify the radical using a Pythagorean identity: $\\sqrt{a^2-a^2\\sin^2\\theta}=a\\cos\\theta$ (assuming $\\cos\\theta\\ge 0$).",
+      "Integrate the resulting trig expression (use $\\cos^2\\theta = \\frac{1+\\cos 2\\theta}{2}$ or $\\sec^2\\theta - 1 = \\tan^2\\theta$ as needed).",
+      "Back-substitute using the original substitution and a right-triangle diagram to express $\\sin\\theta$, $\\cos\\theta$, etc. in terms of $x$.",
+    ],
+    examples: [
+      {
+        problem: "Evaluate $\\displaystyle\\int \\sqrt{4 - x^2}\\,dx$.",
+        solution:
+          "Let $x = 2\\sin\\theta$, so $dx = 2\\cos\\theta\\,d\\theta$ and $\\sqrt{4-x^2} = 2\\cos\\theta$. The integral becomes $\\int 2\\cos\\theta\\cdot 2\\cos\\theta\\,d\\theta = 4\\int\\cos^2\\theta\\,d\\theta = 4\\int\\frac{1+\\cos 2\\theta}{2}\\,d\\theta = 2\\theta + \\sin 2\\theta + C$. Using $\\sin 2\\theta = 2\\sin\\theta\\cos\\theta$, $\\theta = \\arcsin(x/2)$, and $\\cos\\theta = \\sqrt{4-x^2}/2$: answer is $2\\arcsin\\!\\left(\\frac{x}{2}\\right) + \\frac{x\\sqrt{4-x^2}}{2} + C$.",
+      },
+    ],
+    mcqs: [
+      {
+        question:
+          "To evaluate $\\displaystyle\\int \\frac{dx}{\\sqrt{9 - x^2}}$, the correct trig substitution is:",
+        options: [
+          "$x = 3\\tan\\theta$",
+          "$x = 3\\sin\\theta$",
+          "$x = 3\\sec\\theta$",
+          "$x = 9\\sin\\theta$",
+        ],
+        answerIndex: 1,
+        explanation:
+          "The form $\\sqrt{9-x^2} = \\sqrt{a^2-x^2}$ with $a=3$ calls for $x = 3\\sin\\theta$. This gives $\\sqrt{9-9\\sin^2\\theta} = 3\\cos\\theta$ and $dx = 3\\cos\\theta\\,d\\theta$, so the integral becomes $\\int d\\theta = \\theta + C = \\arcsin(x/3) + C$. Option A ($x = 3\\tan\\theta$) is used for $\\sqrt{9+x^2}$. Option C ($x = 3\\sec\\theta$) is used for $\\sqrt{x^2-9}$. Option D has the wrong scale factor.",
+      },
+      {
+        question:
+          "After substituting $x = a\\sin\\theta$ (with $0 \\le \\theta \\le \\pi/2$), the radical $\\sqrt{a^2 - x^2}$ simplifies to:",
+        options: [
+          "$a\\sin\\theta$",
+          "$a\\cos\\theta$",
+          "$a\\tan\\theta$",
+          "$a\\sec\\theta$",
+        ],
+        answerIndex: 1,
+        explanation:
+          "$\\sqrt{a^2-x^2} = \\sqrt{a^2 - a^2\\sin^2\\theta} = a\\sqrt{1-\\sin^2\\theta} = a\\sqrt{\\cos^2\\theta} = a\\cos\\theta$ (positive since $\\cos\\theta \\ge 0$ on $[0,\\pi/2]$). This radical-free form is exactly why trig substitution works.",
+      },
+    ],
+  },
+  {
+    id: "tabular-ibp",
+    name: "Tabular Integration by Parts",
+    unit: "Unit 6: Integration and Accumulation of Change",
+    unitNumber: 6,
+    tags: ["BC only", "FRQ"],
+    summary:
+      "The tabular method organizes repeated integration-by-parts steps into a two-column table, ideal when a polynomial factor differentiates to zero.",
+    formula: "\\int u\\,dv = uv - \\int v\\,du\\quad(\\text{iterated})",
+    description:
+      "When integration by parts must be applied multiple times — typically when one factor is a polynomial $p(x)$ and the other is $e^x$, $\\sin x$, or $\\cos x$ — the tabular method avoids tedious re-application of the IBP formula. Set up two columns: repeatedly differentiate the polynomial in the left column until reaching 0, and repeatedly integrate the other factor in the right column. Multiply diagonally with alternating signs $(+,-,+,-,\\ldots)$ and sum the products for the antiderivative.",
+    steps: [
+      "Identify $u$ (the factor that eventually differentiates to zero, usually a polynomial) and $dv$ (the factor that integrates repeatedly without growing, like $e^x$).",
+      "Left column: write $u$, then differentiate repeatedly until you reach $0$.",
+      "Right column: write $dv$'s antiderivative, then antidifferentiate each successive entry (no $+C$ until the final answer).",
+      "Draw diagonal arrows from each left entry to the right entry one row below it.",
+      "Assign alternating signs starting with $+$ to each diagonal product; sum all products and add $+C$.",
+    ],
+    examples: [
+      {
+        problem: "Use tabular IBP to evaluate $\\displaystyle\\int x^2 e^x\\,dx$.",
+        solution:
+          "Left column (differentiate $x^2$): $x^2 \\to 2x \\to 2 \\to 0$. Right column (integrate $e^x$): $e^x \\to e^x \\to e^x \\to e^x$. Signs: $+, -, +$. Products: $+x^2 e^x$, $-2xe^x$, $+2e^x$. Answer: $x^2 e^x - 2xe^x + 2e^x + C = e^x(x^2 - 2x + 2) + C$.",
+      },
+    ],
+    mcqs: [
+      {
+        question:
+          "The tabular method for integration by parts is most efficient when:",
+        options: [
+          "The integrand is a product of two trig functions.",
+          "One factor is a polynomial and the other is $e^x$, $\\sin x$, or $\\cos x$.",
+          "The integrand contains a logarithm.",
+          "The integral requires only a single IBP application.",
+        ],
+        answerIndex: 1,
+        explanation:
+          "Tabular IBP shines when a polynomial (which terminates after finitely many derivatives) is multiplied by a function that cycles or stays stable under integration ($e^x$, $\\sin x$, $\\cos x$). Products of two trig functions (A) are usually handled with identities. Logarithms (C) require a single IBP with $u = \\ln x$. If only one IBP application is needed (D), the standard formula is just as fast.",
+      },
+      {
+        question:
+          "Applying tabular IBP to $\\displaystyle\\int x^3 \\cos x\\,dx$, the full antiderivative is:",
+        options: [
+          "$x^3\\sin x + 3x^2\\cos x - 6x\\sin x - 6\\cos x + C$",
+          "$x^3\\sin x - 3x^2\\cos x - 6x\\sin x + 6\\cos x + C$",
+          "$-x^3\\cos x + 3x^2\\sin x + 6x\\cos x - 6\\sin x + C$",
+          "$x^3\\cos x + 3x^2\\sin x - 6x\\cos x - 6\\sin x + C$",
+        ],
+        answerIndex: 0,
+        explanation:
+          "Left column (differentiate $x^3$): $x^3,\\ 3x^2,\\ 6x,\\ 6,\\ 0$. Right column (integrate $\\cos x$): $\\cos x \\to \\sin x \\to -\\cos x \\to -\\sin x \\to \\cos x$. Signs: $+,-,+,-$. Products: $+x^3\\sin x$, $-(3x^2)(-\\cos x)=+3x^2\\cos x$, $+(6x)(-\\sin x)=-6x\\sin x$, $-(6)(-\\sin x)$... wait, row 4 right entry is $\\cos x$... Actually: row pairings are (row $i$ left) $\\times$ (row $i+1$ right). Row 0 left = $x^3$, row 1 right = $\\sin x$: product $+x^3\\sin x$. Row 1 left = $3x^2$, row 2 right = $-\\cos x$: product $-(3x^2)(-\\cos x) = +3x^2\\cos x$. Row 2 left = $6x$, row 3 right = $-\\sin x$: product $+(6x)(-\\sin x) = -6x\\sin x$. Row 3 left = $6$, row 4 right = $\\cos x$: product $-(6)(\\cos x) = -6\\cos x$. Sum: $x^3\\sin x + 3x^2\\cos x - 6x\\sin x - 6\\cos x + C$.",
+      },
+    ],
+  },
 ];

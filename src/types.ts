@@ -1,3 +1,19 @@
+export type GraphFnSpec = {
+  fn: string;
+  color?: string;
+  label?: string;
+};
+
+export type GraphConfig = {
+  type: "fns" | "parametric";
+  fns?: GraphFnSpec[];
+  xy?: string;
+  tDomain?: [number, number];
+  xDomain?: [number, number];
+  yDomain?: [number, number];
+  note?: string;
+};
+
 export type Topic = {
   id: string;
   name: string;
@@ -16,4 +32,5 @@ export type Topic = {
     answerIndex: number;
     explanation: string;
   }[];
+  graph?: GraphConfig;
 };

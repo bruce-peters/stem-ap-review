@@ -593,4 +593,55 @@ export default [
       },
     ],
   },
+  {
+    id: "epsilon-delta",
+    name: "Epsilon-Delta Definition of a Limit",
+    unit: "Unit 1: Limits and Continuity",
+    unitNumber: 1,
+    tags: ["theorem", "FRQ"],
+    summary:
+      "The formal epsilon-delta definition gives a rigorous meaning to 'f(x) approaches L as x approaches a.'",
+    formula:
+      "\\forall\\varepsilon>0,\\,\\exists\\delta>0:\\,0<|x-a|<\\delta\\Rightarrow|f(x)-L|<\\varepsilon",
+    description:
+      "The epsilon-delta definition states: $\\lim_{x \\to a} f(x) = L$ if and only if for every $\\varepsilon > 0$ there exists a $\\delta > 0$ such that whenever $0 < |x - a| < \\delta$, we have $|f(x) - L| < \\varepsilon$. The condition $0 < |x - a|$ excludes $x = a$ itself. The 'game' interpretation: no matter how small a tolerance $\\varepsilon$ around $L$ an opponent demands, you can always find a window $\\delta$ around $a$ that forces $f(x)$ within that tolerance. This definition underpins all of calculus rigorously.",
+    steps: [
+      "Identify $a$, $L$, and $f(x)$. Write the goal: given $\\varepsilon > 0$, find $\\delta > 0$.",
+      "Simplify $|f(x) - L|$ algebraically in terms of $|x - a|$.",
+      "Find a relationship of the form $|f(x) - L| \\leq C|x - a|$ by factoring or bounding.",
+      "Set $\\delta = \\varepsilon / C$ (adjust if needed to stay in a safe neighborhood of $a$).",
+      "Verify: whenever $0 < |x - a| < \\delta$, conclude $|f(x) - L| \\leq C|x - a| < C\\delta = \\varepsilon$.",
+    ],
+    examples: [
+      {
+        problem:
+          "Use the epsilon-delta definition to prove $\\lim_{x \\to 3}(2x - 1) = 5$.",
+        solution:
+          "We need $|(2x-1) - 5| = |2x - 6| = 2|x - 3| < \\varepsilon$. So set $\\delta = \\varepsilon/2$. Then whenever $0 < |x-3| < \\delta$: $|(2x-1)-5| = 2|x-3| < 2\\delta = \\varepsilon$. The limit is proven. $\\square$",
+      },
+    ],
+    mcqs: [
+      {
+        question:
+          "In the epsilon-delta definition, the condition $0 < |x - a| < \\delta$ (rather than $|x - a| < \\delta$) ensures that:",
+        options: [
+          "f(x) must be defined at x = a",
+          "x is never equal to a",
+          "the limit equals f(a)",
+          "delta is always positive",
+        ],
+        answerIndex: 1,
+        explanation:
+          "The strict inequality $0 < |x - a|$ ensures $x \\neq a$. Limits describe what f(x) approaches as x gets close to a, not the value at a — so f(a) need not even be defined. Options A and C both incorrectly require f(a) to exist or equal L. Option D is true but not what the $0 <$ condition specifically enforces.",
+      },
+      {
+        question:
+          "Given $\\lim_{x \\to 2}(3x + 1) = 7$, what value of $\\delta$ works for $\\varepsilon = 0.06$?",
+        options: ["$0.06$", "$0.02$", "$0.18$", "$0.03$"],
+        answerIndex: 1,
+        explanation:
+          "$|f(x) - 7| = |(3x+1) - 7| = |3x - 6| = 3|x - 2|$. To make this less than $\\varepsilon = 0.06$, we need $3|x-2| < 0.06$, so $|x - 2| < 0.02$. Set $\\delta = 0.02$. Option A incorrectly sets $\\delta = \\varepsilon$ without accounting for the factor of 3. Option C is $3\\varepsilon$, the wrong direction. Option D is $\\varepsilon/2$, not $\\varepsilon/3$.",
+      },
+    ],
+  },
 ];

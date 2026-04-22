@@ -8,6 +8,16 @@ export default [
     summary:
       "The area between two curves f(x) and g(x) over [a, b] is the integral of the top curve minus the bottom curve.",
     formula: "\\int_a^b [f(x)-g(x)]\\,dx",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "x", color: "blue", label: "g(x) = x (top on [0, 1])" },
+        { fn: "x * x", color: "red", label: "f(x) = x² (bottom on [0, 1])" },
+      ],
+      xDomain: [-0.3, 1.6],
+      yDomain: [-0.2, 1.3],
+      note: "Enclosed region between x and x² from x = 0 to x = 1. Area = ∫₀¹(x − x²)dx = 1/6.",
+    },
     description:
       "When f(x) ≥ g(x) on [a, b], the area of the region between them equals the definite integral of f(x) − g(x) over that interval. If the curves intersect within the interval, you must split the integral at each crossing and take the absolute value of each piece. Finding intersection points by setting f(x) = g(x) is the essential first step.",
     steps: [
@@ -112,6 +122,24 @@ export default [
     summary:
       "Rotating a region bounded above by f(x) and below by the x-axis around the x-axis generates a solid whose volume uses circular disk cross-sections.",
     formula: "V=\\pi\\int_a^b [f(x)]^2\\,dx",
+    graph: {
+      type: "fns",
+      fns: [
+        {
+          fn: "Math.sqrt(Math.max(x, 0))",
+          color: "blue",
+          label: "f(x) = √x (disk radius)",
+        },
+        {
+          fn: "-Math.sqrt(Math.max(x, 0))",
+          color: "blue",
+          label: "",
+        },
+      ],
+      xDomain: [-0.3, 4.5],
+      yDomain: [-2.4, 2.4],
+      note: "Rotating √x around the x-axis: both the curve and its mirror trace the circular cross-sections. Each disk radius = √x.",
+    },
     description:
       "When a curve f(x) ≥ 0 is rotated around the x-axis, each thin vertical slice of width dx sweeps out a disk with radius f(x) and area π[f(x)]². Integrating these disk areas over [a, b] gives the total volume. The disk method applies when there is no gap between the axis of rotation and the curve being revolved.",
     steps: [
@@ -167,6 +195,34 @@ export default [
     summary:
       "When rotating a region between two curves around an axis, subtract the inner disk from the outer disk to form a washer cross-section.",
     formula: "V=\\pi\\int_a^b \\bigl([f(x)]^2-[g(x)]^2\\bigr)\\,dx",
+    graph: {
+      type: "fns",
+      fns: [
+        {
+          fn: "Math.sqrt(Math.max(x, 0))",
+          color: "blue",
+          label: "√x — outer radius",
+        },
+        {
+          fn: "Math.max(x, 0)",
+          color: "red",
+          label: "x — inner radius",
+        },
+        {
+          fn: "-Math.sqrt(Math.max(x, 0))",
+          color: "blue",
+          label: "",
+        },
+        {
+          fn: "-Math.max(x, 0)",
+          color: "red",
+          label: "",
+        },
+      ],
+      xDomain: [-0.15, 1.2],
+      yDomain: [-1.2, 1.2],
+      note: "Rotating the region between √x (outer) and x (inner) around the x-axis. Each cross-section is a washer: outer radius √x, inner radius x.",
+    },
     description:
       "The washer method extends the disk method to regions where a gap exists between the axis of rotation and the inner boundary curve g(x). Each cross section is an annulus (washer) with outer radius f(x) and inner radius g(x), giving an area of π([f(x)]² − [g(x)]²). This difference of squares accounts for the hole in the middle of the solid.",
     steps: [

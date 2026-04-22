@@ -17,6 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Math from "@/components/Math";
 import CodeBlock from "@/components/CodeBlock";
+import GraphBlock from "@/components/GraphBlock";
 import StepList from "@/components/StepList";
 import MCQBlock from "@/components/MCQBlock";
 import NotesSidebar from "@/components/NotesSidebar";
@@ -143,6 +144,15 @@ function TopicBody({
           {renderInline(topic.description)}
         </p>
       </section>
+
+      {topic.graph && (
+        <section>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+            Visualization
+          </h3>
+          <GraphBlock graph={topic.graph} />
+        </section>
+      )}
 
       {topic.formula && (
         <section>

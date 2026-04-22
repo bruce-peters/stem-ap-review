@@ -256,6 +256,19 @@ const oscillationsTopics: Topic[] = [
     summary:
       "In simple harmonic motion, position varies sinusoidally with time according to x(t) = A cos(2πft), where A is amplitude and f is frequency.",
     formula: "x(t) = A\\cos(2\\pi ft)",
+    graph: {
+      type: "fns",
+      fns: [
+        {
+          fn: "Math.cos(2 * Math.PI * x)",
+          color: "blue",
+          label: "x(t) = A·cos(ωt)",
+        },
+      ],
+      xDomain: [-2, 2],
+      yDomain: [-1.5, 1.5],
+      note: "Normalized: A = 1, f = 1 Hz, T = 1 s. Object starts at maximum displacement at t = 0.",
+    },
     description:
       "The position function for SHM is sinusoidal: x(t) = A cos(2πft + φ), where A is the amplitude (maximum displacement), f is frequency, t is time, and φ is the phase constant (often zero if timing starts at maximum displacement). This can also be written as x(t) = A cos(ωt + φ) using angular frequency ω = 2πf. The function oscillates between +A and -A with period T = 1/f. The velocity and acceleration are derivatives of this function and are also sinusoidal but phase-shifted.",
     steps: [
@@ -351,6 +364,24 @@ const oscillationsTopics: Topic[] = [
     summary:
       "In simple harmonic motion without friction, total mechanical energy E = ½kA² remains constant, oscillating between kinetic energy and elastic potential energy.",
     formula: "E = \\frac{1}{2}kA^2 = K + U_s = \\text{const}",
+    graph: {
+      type: "fns",
+      fns: [
+        {
+          fn: "x * x",
+          color: "red",
+          label: "PE = ½kx² — elastic potential energy",
+        },
+        {
+          fn: "1 - x * x",
+          color: "blue",
+          label: "KE = ½k(A²−x²) — kinetic energy",
+        },
+      ],
+      xDomain: [-1.4, 1.4],
+      yDomain: [-0.2, 1.2],
+      note: "Normalized (A = 1, ½k = 1). PE + KE = 1 everywhere. PE peaks at ±A (amplitude); KE peaks at x = 0 (equilibrium).",
+    },
     description:
       "For a spring-mass oscillator, the total energy is E = ½kA², where k is the spring constant and A is the amplitude. At maximum displacement (x = ±A), all energy is potential (U = ½kA²) and kinetic energy is zero. At equilibrium (x = 0), all energy is kinetic (K = ½mv_max²) and potential energy is zero. At intermediate positions, energy is partitioned between K and U. The total energy is proportional to the square of the amplitude, meaning doubling the amplitude quadruples the energy.",
     steps: [
@@ -400,6 +431,29 @@ const oscillationsTopics: Topic[] = [
     tags: ["MCQ frequent", "FRQ"],
     summary:
       "In SHM, position, velocity, and acceleration graphs are all sinusoidal but phase-shifted: velocity leads position by 90°, and acceleration leads velocity by 90°.",
+    graph: {
+      type: "fns",
+      fns: [
+        {
+          fn: "Math.cos(2 * Math.PI * x)",
+          color: "blue",
+          label: "x(t) — position",
+        },
+        {
+          fn: "-Math.sin(2 * Math.PI * x)",
+          color: "red",
+          label: "v(t) — velocity (90° ahead of x)",
+        },
+        {
+          fn: "-Math.cos(2 * Math.PI * x)",
+          color: "green",
+          label: "a(t) — acceleration (180° from x)",
+        },
+      ],
+      xDomain: [-1.5, 1.5],
+      yDomain: [-1.5, 1.5],
+      note: "When x is maximum, v = 0 and a is maximum-negative. When x = 0, v is maximum and a = 0.",
+    },
     description:
       "For SHM starting at maximum displacement: position x(t) is a cosine curve, velocity v(t) is a negative sine curve (derivative of position, 90° ahead), and acceleration a(t) is a negative cosine curve (derivative of velocity, 90° ahead of velocity or 180° out of phase with position). When position is maximum, velocity is zero and acceleration is maximum (negative). When position is zero, velocity is maximum and acceleration is zero. Reading and interpreting these phase relationships is a key skill on the AP exam.",
     steps: [

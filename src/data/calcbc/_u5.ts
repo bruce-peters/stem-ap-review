@@ -62,6 +62,17 @@ export default [
     summary:
       "If f is continuous on [a, b] and differentiable on (a, b), there exists a point c where the instantaneous rate of change equals the average rate of change.",
     formula: "f'(c)=\\frac{f(b)-f(a)}{b-a}",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "x*x*x - 3*x", color: "blue", label: "f(x) = x³−3x" },
+        { fn: "x", color: "red", label: "secant (slope=1)" },
+        { fn: "x - 3.07", color: "green", label: "tangent at c≈1.15" },
+      ],
+      xDomain: [-2.5, 2.5],
+      yDomain: [-4.5, 4.5],
+      note: "MVT: ∃c∈(−2,2) where f'(c) = [f(2)−f(−2)]/(2−(−2)) = 1. Here c≈1.15, where f'(c)=3c²−3=1.",
+    },
     description:
       "The Mean Value Theorem (MVT) states that under appropriate smoothness conditions, the slope of the secant line connecting (a, f(a)) and (b, f(b)) equals the slope of the tangent line at some interior point c. Geometrically, there is at least one point where the tangent is parallel to the secant. The MVT is used on FRQs to justify existence statements — for example, proving that a derivative must equal a specific value on an interval.",
     steps: [
@@ -112,6 +123,16 @@ export default [
     summary:
       "A critical point occurs where the derivative is zero or undefined, and these are the only candidates for local extrema.",
     formula: "f'(c)=0\\ \\text{or}\\ f'(c)\\ \\text{DNE}",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "x*x*x - 3*x", color: "blue", label: "f(x) = x³−3x" },
+        { fn: "3*x*x - 3", color: "red", label: "f′(x) = 3x²−3" },
+      ],
+      xDomain: [-2.5, 2.5],
+      yDomain: [-4, 4],
+      note: "Critical points where f′(x) = 0: x = ±1. f′ crosses zero at x=−1 (local max of f) and x=1 (local min of f).",
+    },
     description:
       "A critical point of f is any value x = c in the domain of f where f'(c) = 0 or f'(c) does not exist. By Fermat's theorem, every local maximum and local minimum of a differentiable function occurs at a critical point, but not every critical point yields an extremum. Identifying critical points is the first step in analyzing the behavior of a function — you then apply the First or Second Derivative Test to classify each one.",
     steps: [
@@ -384,6 +405,16 @@ export default [
     summary:
       "f is concave up where f'' > 0 and concave down where f'' < 0; an inflection point occurs where concavity changes.",
     formula: "f''>0\\Rightarrow\\text{concave up}",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "x*x*x", color: "blue", label: "f(x) = x³" },
+        { fn: "6*x", color: "red", label: "f″(x) = 6x" },
+      ],
+      xDomain: [-1.8, 1.8],
+      yDomain: [-5, 5],
+      note: "f″(x)<0 for x<0 (concave down), f″(x)>0 for x>0 (concave up). Inflection point at x=0 where f″=0.",
+    },
     description:
       "Concavity describes the curvature of a graph: f is concave up on an interval where f''(x) > 0 (the graph curves like a cup, tangent lines lie below the curve) and concave down where f''(x) < 0 (curves like a cap, tangent lines lie above the curve). A point of inflection is a point on the graph where the concavity changes from up to down or vice versa; it requires that f'' changes sign there, not merely that f'' = 0. On FRQs you must justify inflection points by showing the sign change of f''.",
     steps: [
@@ -438,6 +469,16 @@ export default [
     tags: ["FRQ", "MCQ frequent", "calculator active"],
     summary:
       "Set up a function to be maximized or minimized, reduce it to one variable, find critical points, and apply the Candidates Test or First Derivative Test.",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "-(x-2)*(x-2) + 4", color: "blue", label: "f(x) = −(x−2)²+4" },
+        { fn: "-2*(x-2)", color: "red", label: "f′(x) = −2(x−2)" },
+      ],
+      xDomain: [-0.5, 4.5],
+      yDomain: [-1, 5],
+      note: "Maximum at x=2 where f′(x)=0. f′>0 left of x=2 (increasing), f′<0 right of x=2 (decreasing).",
+    },
     description:
       "Optimization problems ask for the maximum or minimum value of a quantity — area, volume, cost, distance — subject to given constraints. The process always involves identifying the objective function (what you optimize), expressing it in terms of one variable using the constraint equation, finding critical points via the derivative, and classifying them. On a closed domain the Candidates Test is used; on an open domain you rely on the First or Second Derivative Test combined with physical reasoning.",
     steps: [
@@ -494,6 +535,17 @@ export default [
     tags: ["MCQ frequent", "FRQ"],
     summary:
       "The graph of f' reveals where f is increasing, decreasing, and has local extrema; the graph of f'' reveals concavity and inflection points of f.",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "x*x*x - 3*x", color: "blue", label: "f(x)" },
+        { fn: "3*x*x - 3", color: "red", label: "f′(x)" },
+        { fn: "6*x", color: "green", label: "f″(x)" },
+      ],
+      xDomain: [-2.2, 2.2],
+      yDomain: [-5, 5],
+      note: "f′=0 at x=±1 (extrema of f). f″=0 at x=0 (inflection of f, extremum of f′). Where f′>0, f increases.",
+    },
     description:
       "Understanding the graphical relationships among f, f', and f'' is essential for AP Calculus. Where f' > 0, f is increasing; where f' < 0, f is decreasing; where f' changes sign, f has a local extremum. Where f'' > 0, f is concave up (f' is increasing); where f'' < 0, f is concave down (f' is decreasing); where f'' changes sign, f has an inflection point. Many MCQ and FRQ items give you the graph of f' or f'' and ask you to describe the behavior of f itself.",
     steps: [
