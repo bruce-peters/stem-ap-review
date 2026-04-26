@@ -64,9 +64,13 @@ export default function AuthPage() {
           <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
             <BookOpen className="w-6 h-6 text-primary" />
           </div>
-          <h1 className="text-2xl font-bold text-foreground tracking-tight">AP Study</h1>
+          <h1 className="text-2xl font-bold text-foreground tracking-tight">
+            AP Study
+          </h1>
           <p className="text-sm text-muted-foreground">
-            {mode === "signin" ? "Sign in to sync your progress" : "Create an account to get started"}
+            {mode === "signin"
+              ? "Sign in to sync your progress"
+              : "Create an account to get started"}
           </p>
         </div>
 
@@ -117,7 +121,9 @@ export default function AuthPage() {
                 <input
                   type={showPw ? "text" : "password"}
                   required
-                  autoComplete={mode === "signup" ? "new-password" : "current-password"}
+                  autoComplete={
+                    mode === "signup" ? "new-password" : "current-password"
+                  }
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -129,7 +135,11 @@ export default function AuthPage() {
                   onClick={() => setShowPw((v) => !v)}
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPw ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -180,7 +190,9 @@ export default function AuthPage() {
         </div>
 
         <p className="text-center text-xs text-muted-foreground mt-4">
-          {mode === "signin" ? "Don't have an account? " : "Already have an account? "}
+          {mode === "signin"
+            ? "Don't have an account? "
+            : "Already have an account? "}
           <button
             onClick={() => switchMode(mode === "signin" ? "signup" : "signin")}
             className="text-primary hover:underline"

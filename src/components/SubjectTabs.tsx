@@ -22,6 +22,7 @@ import {
 
 import NotesSidebar from "@/components/NotesSidebar";
 import PracticeTest from "@/components/PracticeTest";
+import ApushTab from "@/components/apush/ApushTab";
 import calcbc from "@/data/calcbc";
 import physics from "@/data/physics";
 import cs from "@/data/cs";
@@ -45,7 +46,7 @@ const TAG_COLORS: Record<string, string> = {
   theorem: "bg-zinc-700/80 text-zinc-300 border-zinc-500 hover:bg-zinc-700",
 };
 
-type Subject = "calcbc" | "physics" | "cs";
+type Subject = "calcbc" | "physics" | "cs" | "apush";
 
 const SUBJECTS: {
   id: Subject;
@@ -56,6 +57,7 @@ const SUBJECTS: {
   { id: "calcbc", label: "Calc BC", icon: BookOpen, data: calcbc },
   { id: "physics", label: "Physics", icon: FlaskConical, data: physics },
   { id: "cs", label: "CS", icon: Monitor, data: cs },
+  { id: "apush", label: "APUSH", icon: BookOpen, data: [] },
 ];
 
 function EmptyState({ subject }: { subject: string }) {
@@ -111,7 +113,8 @@ export default function SubjectTabs() {
   const noteKey = `${subject}:${selectedUnit ?? "all"}`;
   const noteUnitLabel =
     selectedUnit !== null
-      ? topics.find((t) => t.unitNumber === selectedUnit)?.unit ?? `Unit ${selectedUnit}`
+      ? topics.find((t) => t.unitNumber === selectedUnit)?.unit ??
+        `Unit ${selectedUnit}`
       : `${currentSubject.label} — All Units`;
 
   const filtered = useMemo(() => {
@@ -237,8 +240,13 @@ export default function SubjectTabs() {
         </div>
       </header>
 
-      {/* Search + tag filters — hidden in MCQ practice mode */}
-      <div className={cn("px-6 py-3 border-b border-border flex-shrink-0 flex flex-col gap-2", mcqActive && "hidden")}>
+      {/* Search + tag filters — hidden in MCQ practice mode and APUSH */}
+      <div
+        className={cn(
+          "px-6 py-3 border-b border-border flex-shrink-0 flex flex-col gap-2",
+          (mcqActive || subject === "apush") && "hidden"
+        )}
+      >
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
           <Input
@@ -309,7 +317,11 @@ export default function SubjectTabs() {
 
       {/* Main content */}
       <div className="flex flex-1 min-h-0">
-        {mcqActive ? (
+        {subject === "apush" ? (
+          <main className="flex flex-col flex-1 min-w-0 min-h-0">
+            <ApushTab />
+          </main>
+        ) : mcqActive ? (
           <PracticeTest subject={subject} onBack={() => setMcqActive(false)} />
         ) : (
           <>

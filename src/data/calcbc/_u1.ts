@@ -44,6 +44,14 @@ export default [
         explanation:
           "Factor: $\\frac{(x-2)(x+2)}{x-2} = x + 2$ for $x \\neq 2$. Substituting $x = 2$ gives $2 + 2 = 4$. A (0) comes from incorrectly evaluating the numerator alone. B (2) is a common arithmetic error. D is wrong because the limit exists even though the expression is undefined at $x = 2$.",
       },
+      {
+        question:
+          "Suppose $\\lim_{x \\to 0} \\frac{f(x)}{x} = 5$. What is $\\lim_{x \\to 0} f(x)$?",
+        options: ["$5$", "$0$", "DNE", "Cannot be determined"],
+        answerIndex: 1,
+        explanation:
+          "Since $\\lim_{x \\to 0} \\frac{f(x)}{x} = 5$ is a finite number and $\\lim_{x \\to 0} x = 0$, the product rule gives $\\lim_{x \\to 0} f(x) = \\lim_{x \\to 0}\\!\\left[\\frac{f(x)}{x} \\cdot x\\right] = 5 \\cdot 0 = 0$. Option A (5) is the most common error — confusing the limit of the ratio with the limit of $f$ itself. Option C (DNE) is wrong because the product rule applies cleanly. Option D is wrong; the answer is fully determined.",
+      },
     ],
   },
   {
@@ -94,6 +102,19 @@ export default [
         explanation:
           "Left-hand limit: $2(1) + 1 = 3$. Right-hand limit: $(1)^2 + 2 = 3$. Both one-sided limits equal 3, so $\\lim_{x\\to 1} f(x) = 3$. DNE would apply only if the one-sided limits differed. 2 and 1 are arithmetic errors in evaluating the pieces.",
       },
+      {
+        question:
+          "For what value of $k$ does $\\lim_{x \\to 2} f(x)$ exist, where $f(x) = \\begin{cases} kx^2 + 3 & x < 2 \\\\ 3x - 1 & x \\geq 2 \\end{cases}$?",
+        options: [
+          "$k = 1$",
+          "$k = \\frac{1}{2}$",
+          "$k = \\frac{3}{4}$",
+          "No value of $k$ makes the limit exist",
+        ],
+        answerIndex: 1,
+        explanation:
+          "For the two-sided limit to exist both one-sided limits must be equal. The right-hand limit is $3(2)-1=5$. The left-hand limit is $k(2)^2+3=4k+3$. Setting $4k+3=5$ gives $4k=2$, so $k=\\frac{1}{2}$. Option A ($k=1$) gives $4(1)+3=7\\neq5$. Option C ($k=\\frac{3}{4}$) gives $4(\\frac{3}{4})+3=6\\neq5$. Option D is wrong because $k=\\frac{1}{2}$ works.",
+      },
     ],
   },
   {
@@ -143,6 +164,19 @@ export default [
         answerIndex: 0,
         explanation:
           "By the scalar law: $2 \\cdot 5 = 10$. By the power law: $3^2 = 9$. By the difference law: $10 - 9 = 1$. B (7) results from computing $2(5) - 3 = 7$ (forgetting to square g). C (4) is a miscalculation. D (10) is the scalar term alone without subtracting.",
+      },
+      {
+        question:
+          "Suppose $\\lim_{x \\to a} f(x) = 0$ and $\\lim_{x \\to a} g(x) = 0$. Which of the following is necessarily true?",
+        options: [
+          "$\\lim_{x \\to a} \\dfrac{f(x)}{g(x)} = 1$",
+          "$\\lim_{x \\to a} \\dfrac{f(x)}{g(x)}$ does not exist",
+          "$\\lim_{x \\to a} [f(x) \\cdot g(x)] = 0$",
+          "$\\lim_{x \\to a} [f(x) + g(x)]$ does not exist",
+        ],
+        answerIndex: 2,
+        explanation:
+          "By the product law, $\\lim_{x \\to a}[f(x)\\cdot g(x)] = 0 \\cdot 0 = 0$, so C is always true. A is false in general: take $f(x)=x$ and $g(x)=2x$ near $a=0$; then $\\frac{f}{g}\\to\\frac{1}{2}$, not 1. B is also false for the same example — the ratio can exist. D is false because the sum law guarantees $\\lim[f+g]=0+0=0$. The key insight: $0/0$ is indeterminate (making A and B uncertain), but $0\\cdot0$ is not — the product law handles it directly.",
       },
     ],
   },

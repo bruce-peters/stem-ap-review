@@ -5,7 +5,9 @@ export default function LoginButton() {
   const { user, loading, signOut } = useAuth();
 
   if (loading) {
-    return <div className="w-20 h-7 rounded-md bg-muted animate-pulse flex-shrink-0" />;
+    return (
+      <div className="w-20 h-7 rounded-md bg-muted animate-pulse flex-shrink-0" />
+    );
   }
 
   if (!user) return null; // AuthPage is shown instead

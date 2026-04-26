@@ -8,11 +8,12 @@
       "WebFetch(domain:library.fiveable.me)",
       "WebFetch(domain:www.apcsexamprep.com)",
       "WebFetch(domain:apcsdebugger.com)",
-      "WebFetch(domain:goldiesmathemporium.com)"
+      "WebFetch(domain:goldiesmathemporium.com)",
+      "Bash(pip3 install *)"
     ]
   },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "supabase"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }

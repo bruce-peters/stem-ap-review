@@ -103,6 +103,16 @@ export default [
     tags: ["MCQ frequent"],
     summary: "The derivative of $x^n$ is $nx^{n-1}$ for any real number $n$.",
     formula: "\\frac{d}{dx}[x^n]=nx^{n-1}",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "x*x", color: "blue", label: "f(x) = x²" },
+        { fn: "2*x", color: "red", label: "f'(x) = 2x" },
+      ],
+      xDomain: [-2, 2],
+      yDomain: [-2, 4],
+      note: "Power Rule illustrated: the derivative of x² is 2x (linear).",
+    },
     description:
       "The Power Rule is the most-used differentiation rule and applies to any real exponent, including negative and fractional powers. To differentiate $x^n$, bring the exponent down as a coefficient and reduce the exponent by one. Rewrite radical and rational expressions as powers of $x$ before applying the rule.",
     steps: [
@@ -234,6 +244,15 @@ export default [
     summary:
       "The derivative of a product of two functions is the first times the derivative of the second plus the second times the derivative of the first.",
     formula: "(fg)'=f'g+fg'",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "x*sin(x)", color: "blue", label: "x·sin(x)" },
+        { fn: "sin(x)+x*cos(x)", color: "green", label: "sin(x)+x·cos(x)" },
+      ],
+      xDomain: [-6, 6],
+      yDomain: [-3, 3],
+    },
     description:
       "When two differentiable functions are multiplied together, their product cannot be differentiated by simply multiplying their individual derivatives. Instead, the Product Rule gives $(fg)'=f'g+fg'$, which accounts for the rate at which each factor changes while the other is held fixed. This rule is essential whenever two non-constant expressions are multiplied.",
     steps: [
@@ -340,6 +359,16 @@ export default [
       "The derivative of $\\sin x$ is $\\cos x$, and the derivative of $\\cos x$ is $-\\sin x$.",
     formula:
       "\\frac{d}{dx}[\\sin x]=\\cos x,\\quad\\frac{d}{dx}[\\cos x]=-\\sin x",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "sin(x)", color: "blue", label: "sin(x)" },
+        { fn: "cos(x)", color: "red", label: "cos(x) = d/dx[sin(x)]" },
+      ],
+      xDomain: [-6.3, 6.3],
+      yDomain: [-1.5, 1.5],
+      note: "The derivative of sin(x) is cos(x). Note: cos is 0 when sin has max/min.",
+    },
     description:
       "These two fundamental trigonometric derivatives are proved using the limit definition and the special limits $\\lim_{h\\to 0}\\frac{\\sin h}{h}=1$ and $\\lim_{h\\to 0}\\frac{\\cos h -1}{h}=0$. They cycle: differentiating $\\sin x$ four times returns to $\\sin x$. The negative sign on the cosine derivative is a frequent source of errors and must be memorized precisely.",
     steps: [

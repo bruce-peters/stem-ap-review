@@ -8,6 +8,16 @@ export default [
     summary:
       "The chain rule differentiates composite functions by multiplying the derivative of the outer function by the derivative of the inner function.",
     formula: "\\frac{d}{dx}[f(g(x))]=f'(g(x))\\cdot g'(x)",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "sin(x*x)", color: "blue", label: "sin(x²)" },
+        { fn: "2*x*cos(x*x)", color: "green", label: "2x·cos(x²)" },
+      ],
+      xDomain: [-3, 3],
+      yDomain: [-2, 2],
+      note: "Chain Rule: d/dx[sin(x²)] = cos(x²)·2x. Outer derivative times inner derivative.",
+    },
     description:
       "When differentiating a composite function $f(g(x))$, you evaluate the derivative of the outer function $f$ at the inner function $g(x)$, then multiply by the derivative of the inner function $g'(x)$. This rule extends to chains of any length by repeated application. Forgetting to multiply by $g'(x)$ is the single most common chain-rule error on the AP exam.",
     steps: [
@@ -115,6 +125,16 @@ export default [
     tags: ["MCQ frequent", "FRQ"],
     summary:
       "Implicit differentiation finds $\\frac{dy}{dx}$ for equations where $y$ cannot be (or is not) isolated as an explicit function of $x$.",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "sqrt(25-x*x)", color: "blue", label: "x² + y² = 25 (top)" },
+        { fn: "-sqrt(25-x*x)", color: "blue", label: "" },
+      ],
+      xDomain: [-5.5, 5.5],
+      yDomain: [-5.5, 5.5],
+      note: "Circle x² + y² = 25. Implicit differentiation gives dy/dx = −x/y.",
+    },
     description:
       "When an equation relates $x$ and $y$ without solving for $y$ explicitly, differentiate both sides with respect to $x$, treating $y$ as a function of $x$ and applying the chain rule whenever $y$ appears — so $\\frac{d}{dx}[y^n] = ny^{n-1}\\frac{dy}{dx}$. After differentiating, collect all terms containing $\\frac{dy}{dx}$ on one side and solve algebraically. This technique is essential for curves like circles, ellipses, and more exotic relations that fail the vertical-line test globally.",
     steps: [
@@ -265,6 +285,15 @@ export default [
       "The derivatives of $\\arcsin x$ and $\\arccos x$ are reciprocals of each other in sign, both involving the factor $\\frac{1}{\\sqrt{1-x^2}}$.",
     formula:
       "\\frac{d}{dx}[\\arcsin x]=\\frac{1}{\\sqrt{1-x^2}},\\quad\\frac{d}{dx}[\\arccos x]=-\\frac{1}{\\sqrt{1-x^2}}",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "asin(x)", color: "blue", label: "arcsin(x)" },
+        { fn: "acos(x)", color: "red", label: "arccos(x)" },
+      ],
+      xDomain: [-1.1, 1.1],
+      yDomain: [-2, 3.5],
+    },
     description:
       "These formulas are derived by applying the inverse-function derivative rule to $\\sin$ and $\\cos$, using the Pythagorean identity to rewrite $\\cos(\\arcsin x) = \\sqrt{1-x^2}$. The domain is $-1 < x < 1$ for both derivatives. Notably $\\frac{d}{dx}[\\arcsin x] + \\frac{d}{dx}[\\arccos x] = 0$, consistent with the identity $\\arcsin x + \\arccos x = \\frac{\\pi}{2}$.",
     steps: [
@@ -316,6 +345,15 @@ export default [
     summary:
       "The derivative of $\\arctan x$ is $\\frac{1}{1+x^2}$, valid for all real $x$.",
     formula: "\\frac{d}{dx}[\\arctan x]=\\frac{1}{1+x^2}",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "atan(x)", color: "blue", label: "arctan(x)" },
+        { fn: "1/(1+x*x)", color: "red", label: "1/(1+x²)" },
+      ],
+      xDomain: [-4, 4],
+      yDomain: [-2, 2],
+    },
     description:
       "This formula follows from the inverse-function derivative theorem applied to $\\tan$: since $\\frac{d}{dx}[\\tan x] = \\sec^2 x = 1 + \\tan^2 x$, the reciprocal at the corresponding point gives $\\frac{1}{1+x^2}$. Unlike the arcsin/arccos derivatives, this formula is defined for all real numbers because the denominator $1+x^2$ is never zero. Combined with the chain rule, it produces antiderivatives of the form $\\frac{1}{a^2+x^2}$, which appear frequently in integration problems.",
     steps: [

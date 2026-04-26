@@ -219,6 +219,15 @@ export default [
     summary:
       "A quantity grows or decays exponentially when its rate of change is proportional to its current value, modeled by dy/dt = ky with solution y = Ce^{kt}.",
     formula: "\\frac{dy}{dt}=ky\\Rightarrow y=Ce^{kt}",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "exp(0.5*x)", color: "blue", label: "k>0 growth" },
+        { fn: "exp(-0.5*x)", color: "red", label: "k<0 decay" },
+      ],
+      xDomain: [-1, 4],
+      yDomain: [0, 4],
+    },
     description:
       "The differential equation dy/dt = ky states that the rate of change of y is proportional to y itself, with proportionality constant k. When k > 0 the quantity grows exponentially; when k < 0 it decays. Solving by separation of variables yields the general solution y = Ce^{kt}, where C = y(0) is the initial value. This model applies to population growth, radioactive decay, Newton's law of cooling (shifted), and compound interest.",
     steps: [
@@ -493,6 +502,15 @@ export default [
     summary:
       "The explicit solution to the logistic DE is P(t) = L/(1 + Ae^{-kt}), an S-shaped curve that starts near exponential growth and levels off at the carrying capacity.",
     formula: "P(t)=\\frac{L}{1+Ae^{-kt}}",
+    graph: {
+      type: "fns",
+      fns: [
+        { fn: "100/(1+9*exp(-x))", color: "blue", label: "P(t)" },
+        { fn: "50", color: "red", label: "L/2" },
+      ],
+      xDomain: [-1, 8],
+      yDomain: [0, 110],
+    },
     description:
       "The logistic solution P(t) = L/(1 + Ae^{-kt}) is an S-shaped (sigmoidal) curve. For small t the solution behaves nearly exponentially; as t increases the growth rate decelerates; and as t → ∞ the solution asymptotically approaches L. The constant A = (L - P₀)/P₀ is determined by the initial population P₀ = P(0). The inflection point, where the concavity changes from up to down, occurs at t = (ln A)/k and P = L/2.",
     steps: [
