@@ -3,7 +3,10 @@ import { period1Topics } from "./p1";
 import { period2Topics } from "./p2";
 import { period3Topics } from "./p3";
 import { period4Topics } from "./p4";
+import { period5Topics } from "./p5";
 import { period6Topics } from "./p6";
+import { period7Topics } from "./p7";
+import { period8Topics } from "./p8";
 import { period9Topics } from "./p9";
 
 export type { ApushTopic } from "../apush-types";
@@ -30,7 +33,10 @@ export const apushTopics: ApushTopic[] = [
   ...period2Topics,
   ...period3Topics,
   ...period4Topics,
+  ...period5Topics,
   ...period6Topics,
+  ...period7Topics,
+  ...period8Topics,
   ...period9Topics,
 ];
 
@@ -39,6 +45,9 @@ export {
   period2Topics,
   period3Topics,
   period4Topics,
+  period5Topics,
   period6Topics,
+  period7Topics,
+  period8Topics,
   period9Topics,
 };

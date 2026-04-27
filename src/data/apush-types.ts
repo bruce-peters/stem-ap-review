@@ -29,6 +29,7 @@ export type ApushTopic = {
   context: string
   themes: ApushTheme[]
   connections: string[]
+  year?: number   // approximate year for timeline placement
   mcqs?: {
     question: string
     options: string[]

@@ -6,7 +6,9 @@ import CategorySection from './CategorySection'
 import ThemeSection from './ThemeSection'
 import ApushSheet from './ApushSheet'
 import ApushFilterBar, { type ApushFilters } from './ApushFilterBar'
-import { BookOpen } from 'lucide-react'
+import ApushTimeline from './ApushTimeline'
+import ConnectionsWeb from './ConnectionsWeb'
+import { BookOpen, Network, Clock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const CATEGORY_ORDER: ApushCategory[] = [
@@ -30,7 +32,7 @@ const THEME_ORDER: ApushTheme[] = [
   'Social Structures',
 ]
 
-type GroupBy = 'category' | 'theme'
+type ViewMode = 'category' | 'theme' | 'web' | 'timeline'
 
 /** Periods that have data loaded */
 const POPULATED_PERIODS = new Set(apushTopics.map((t) => t.period))
@@ -58,14 +60,14 @@ export default function ApushTab() {
   const [activePeriod, setActivePeriod] = useState(1)
   const [openTopic, setOpenTopic] = useState<ApushTopic | null>(null)
   const [sheetOpen, setSheetOpen] = useState(false)
-  const [groupBy, setGroupBy] = useState<GroupBy>('category')
+  const [viewMode, setViewMode] = useState<ViewMode>('category')
   const [filters, setFilters] = useState<ApushFilters>({
     categories: new Set(),
     themes: new Set(),
     essayTags: new Set(),
   })
 
-  // Filtered topics for the active period
+  // Filtered topics for the active period (used in category/theme/web views)
   const periodTopics = useMemo(() => {
     let result = apushTopics.filter((t) => t.period === activePeriod)
     if (filters.categories.size > 0) {
@@ -83,6 +85,31 @@ export default function ApushTab() {
     }
     return result
   }, [activePeriod, filters])
+
+  // All topics for active period unfiltered (used by web view)
+  const allPeriodTopics = useMemo(
+    () => apushTopics.filter((t) => t.period === activePeriod),
+    [activePeriod],
+  )
+
+  // Filtered topics across ALL periods (used in timeline view)
+  const allFilteredTopics = useMemo(() => {
+    let result = apushTopics.slice()
+    if (filters.categories.size > 0) {
+      result = result.filter((t) => filters.categories.has(t.category))
+    }
+    if (filters.themes.size > 0) {
+      result = result.filter((t) =>
+        [...filters.themes].some((theme) => t.themes.includes(theme as ApushTheme))
+      )
+    }
+    if (filters.essayTags.size > 0) {
+      result = result.filter((t) =>
+        [...filters.essayTags].some((tag) => t.tags.includes(tag))
+      )
+    }
+    return result
+  }, [filters])
 
   // Group by category in the specified order
   const grouped = useMemo(() => {
@@ -113,7 +140,6 @@ export default function ApushTab() {
   const handleNavigateTo = useCallback((id: string) => {
     const target = apushTopics.find((t) => t.id === id)
     if (target) {
-      // Switch to that period if needed
       setActivePeriod(target.period)
       setOpenTopic(target)
       setSheetOpen(true)
@@ -150,24 +176,28 @@ export default function ApushTab() {
 
   const currentPeriodInfo = apushPeriods.find((p) => p.number === activePeriod)!
   const isEmpty = EMPTY_PERIODS.has(activePeriod)
-  const activeGrouped = groupBy === 'category' ? grouped : groupedByTheme
+  const activeGrouped = viewMode === 'theme' ? groupedByTheme : grouped
   const hasResults = activeGrouped.size > 0
+
+  const isTimelineMode = viewMode === 'timeline'
 
   return (
     <>
-      {/* Period tabs */}
-      <PeriodTabs
-        periods={apushPeriods}
-        activePeriod={activePeriod}
-        onSelectPeriod={(n) => {
-          setActivePeriod(n)
-          clearFilters()
-        }}
-        emptyPeriods={EMPTY_PERIODS}
-      />
+      {/* Period tabs — hidden in timeline mode (timeline shows all periods) */}
+      {!isTimelineMode && (
+        <PeriodTabs
+          periods={apushPeriods}
+          activePeriod={activePeriod}
+          onSelectPeriod={(n) => {
+            setActivePeriod(n)
+            clearFilters()
+          }}
+          emptyPeriods={EMPTY_PERIODS}
+        />
+      )}
 
-      {/* Filter bar */}
-      {!isEmpty && (
+      {/* Filter bar — hidden in web view */}
+      {(isTimelineMode || (!isEmpty && viewMode !== 'web')) && (
         <ApushFilterBar
           filters={filters}
           onToggleCategory={toggleCategory}
@@ -177,10 +207,69 @@ export default function ApushTab() {
         />
       )}
 
+      {/* View-mode toolbar */}
+      {(isTimelineMode || !isEmpty) && (
+        <div className="flex items-center gap-2 px-6 py-2.5 border-b border-border flex-shrink-0">
+          <span className="text-xs text-muted-foreground">View</span>
+          <div className="flex rounded-md border border-border overflow-hidden">
+            <button
+              onClick={() => setViewMode('category')}
+              className={cn(
+                'px-3 py-1 text-xs font-medium transition-colors',
+                viewMode === 'category'
+                  ? 'bg-accent text-foreground'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-accent/40',
+              )}
+            >
+              Term type
+            </button>
+            <button
+              onClick={() => setViewMode('theme')}
+              className={cn(
+                'px-3 py-1 text-xs font-medium transition-colors border-l border-border',
+                viewMode === 'theme'
+                  ? 'bg-accent text-foreground'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-accent/40',
+              )}
+            >
+              Theme
+            </button>
+            <button
+              onClick={() => setViewMode('web')}
+              className={cn(
+                'px-3 py-1 text-xs font-medium transition-colors border-l border-border flex items-center gap-1.5',
+                viewMode === 'web'
+                  ? 'bg-accent text-foreground'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-accent/40',
+              )}
+            >
+              <Network className="w-3 h-3" />
+              Web
+            </button>
+            <button
+              onClick={() => setViewMode('timeline')}
+              className={cn(
+                'px-3 py-1 text-xs font-medium transition-colors border-l border-border flex items-center gap-1.5',
+                viewMode === 'timeline'
+                  ? 'bg-accent text-foreground'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-accent/40',
+              )}
+            >
+              <Clock className="w-3 h-3" />
+              Timeline
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Main content area */}
-      <div className="flex-1 min-h-0 overflow-y-auto">
-        {isEmpty ? (
+      <div className={cn('flex-1 min-h-0', viewMode === 'web' ? 'overflow-hidden' : 'overflow-y-auto')}>
+        {isTimelineMode ? (
+          <ApushTimeline topics={allFilteredTopics} onClickTopic={openCard} />
+        ) : isEmpty ? (
           <EmptyPeriod periodLabel={`${currentPeriodInfo.label}: ${currentPeriodInfo.dateRange}`} />
+        ) : viewMode === 'web' ? (
+          <ConnectionsWeb periodTopics={allPeriodTopics} onNodeClick={openCard} />
         ) : !hasResults ? (
           <div className="flex flex-col items-center justify-center py-24 text-muted-foreground gap-2">
             <p className="text-sm">No terms match the active filters.</p>
@@ -193,37 +282,8 @@ export default function ApushTab() {
           </div>
         ) : (
           <div className="p-6 flex flex-col gap-8">
-            {/* Group-by toggle */}
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">Group by</span>
-              <div className="flex rounded-md border border-border overflow-hidden">
-                <button
-                  onClick={() => setGroupBy('category')}
-                  className={cn(
-                    'px-3 py-1 text-xs font-medium transition-colors',
-                    groupBy === 'category'
-                      ? 'bg-accent text-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-accent/40',
-                  )}
-                >
-                  Term type
-                </button>
-                <button
-                  onClick={() => setGroupBy('theme')}
-                  className={cn(
-                    'px-3 py-1 text-xs font-medium transition-colors border-l border-border',
-                    groupBy === 'theme'
-                      ? 'bg-accent text-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-accent/40',
-                  )}
-                >
-                  Theme
-                </button>
-              </div>
-            </div>
-
             {/* Sections */}
-            {groupBy === 'category'
+            {viewMode === 'category'
               ? [...grouped.entries()].map(([category, topics]) => (
                   <CategorySection
                     key={category}
