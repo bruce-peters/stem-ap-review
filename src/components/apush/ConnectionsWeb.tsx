@@ -184,7 +184,7 @@ export default function ConnectionsWeb({ periodTopics, onNodeClick }: Connection
     const el = containerRef.current
     if (!el) return
 
-    const fg = new ForceGraph<GNode>(el)
+    const fg: ForceGraph<GNode> = new ForceGraph<GNode>(el)
       .backgroundColor('#09090b')
       .nodeLabel('name')
       .nodeCanvasObject(paintNode as Parameters<typeof fg.nodeCanvasObject>[0])

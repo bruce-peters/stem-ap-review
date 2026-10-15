@@ -58,7 +58,6 @@ function TopicContent({
   onToggleReviewed,
   isStarred,
   onToggleStarred,
-  isCS,
   TitleComponent,
   DescriptionComponent,
 }: {

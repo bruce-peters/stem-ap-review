@@ -1,4 +1,4 @@
-import type { Topic } from "../types";
+import type { Topic } from "../../types";
 import { primitiveTypesTopics } from "./u1-primitive-types";
 import { usingObjectsTopics } from "./u2-using-objects";
 import { booleanIfStatementsTopics } from "./u3-boolean-if-statements";
