@@ -2,6 +2,8 @@
 
 A personal study tool for AP Calc BC, AP Physics C (Mechanics), AP Computer Science A, and AP US History. It organizes every testable topic into a searchable card grid, and lets you drill formulas, worked examples, and multiple-choice questions in one place.
 
+**Live site:** https://stem-ap-review.vercel.app (no login; progress is saved in your browser)
+
 ## What it does
 
 Studying for AP exams usually means juggling a textbook, a formula sheet, and a separate practice problem set. This app combines all three. Every topic has a summary card in the main grid. Clicking a card opens a detail panel with the formula rendered in proper math notation, a step-by-step method, worked examples, and multiple-choice questions with scored feedback. For AP US History, topics are organized by period and category, with a connections web and timeline view that show how terms relate across the course.
@@ -60,19 +62,22 @@ All content is static TypeScript data files compiled into the bundle. No server 
 
 ## Getting started
 
-**Prerequisites:** Node.js 18+, npm
+**Prerequisites:** Node.js 20.19+ or 22.12+ (required by Vite 8), npm. No environment variables or API keys are needed.
 
 ```bash
 # Clone and install
-git clone <repo-url>
+git clone https://github.com/bruce-peters/stem-ap-review.git
 cd stem-ap-review
-npm install
+npm ci            # or: npm install
 
 # Run dev server
 npm run dev
 
-# Build for production
+# Type-check and build for production (output in dist/)
 npm run build
+
+# Serve the production build locally
+npm run preview
 ```
 
 ## Usage

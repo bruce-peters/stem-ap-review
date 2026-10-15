@@ -29,7 +29,7 @@ function renderInline(text: string) {
   });
 }
 
-export default function MCQBlock({ mcqs, isCS, onComplete }: MCQBlockProps) {
+export default function MCQBlock({ mcqs, onComplete }: MCQBlockProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
