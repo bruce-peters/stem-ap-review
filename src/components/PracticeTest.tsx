@@ -7,7 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/context/AuthContext";
+import { useProgress } from "@/context/ProgressContext";
 import {
   CheckCircle2,
   XCircle,
@@ -81,7 +81,7 @@ interface PracticeTestProps {
 }
 
 export default function PracticeTest({ subject, onBack }: PracticeTestProps) {
-  const { practiceAnswers: allAnswers, practiceSubmitted: allSubmitted, savePracticeState } = useAuth();
+  const { practiceAnswers: allAnswers, practiceSubmitted: allSubmitted, savePracticeState } = useProgress();
   const answers: Record<number, number> = allAnswers[subject] ?? {};
   const submitted = new Set<number>(allSubmitted[subject] ?? []);
   const unitLabels = UNIT_LABELS[subject];

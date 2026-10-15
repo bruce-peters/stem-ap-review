@@ -3,10 +3,9 @@ import type { Topic } from "@/types";
 import TopicCard from "@/components/TopicCard";
 import TopicSheet from "@/components/TopicSheet";
 import UnitSidebar from "@/components/UnitSidebar";
-import LoginButton from "@/components/LoginButton";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/context/AuthContext";
+import { useProgress } from "@/context/ProgressContext";
 import {
   Search,
   FlaskConical,
@@ -92,7 +91,7 @@ export default function SubjectTabs() {
     toggleStarred,
     notes,
     saveNote,
-  } = useAuth();
+  } = useProgress();
 
   const [subject, setSubject] = useState<Subject>("calcbc");
   const [search, setSearch] = useState("");
@@ -236,7 +235,6 @@ export default function SubjectTabs() {
           >
             <PenLine className="w-3.5 h-3.5" />
           </button>
-          <LoginButton />
         </div>
       </header>
 

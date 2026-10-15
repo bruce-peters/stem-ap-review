@@ -11,9 +11,5 @@
       "WebFetch(domain:goldiesmathemporium.com)",
       "Bash(pip3 install *)"
     ]
-  },
-  "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": [
-    "supabase"
-  ]
+  }
 }

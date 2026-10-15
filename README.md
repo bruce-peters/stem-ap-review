@@ -15,16 +15,15 @@ Studying for AP exams usually means juggling a textbook, a formula sheet, and a 
 - Syntax-highlighted code blocks for CS topics
 - Interactive graph viewer for APUSH term connections (force-directed web)
 - Chronological timeline view across all APUSH periods
-- Star and mark-as-reviewed tracking, persisted to Supabase when logged in (localStorage fallback when logged out)
+- Star and mark-as-reviewed tracking, saved in the browser with localStorage
 - Per-unit notes sidebar
 - MCQ practice test mode with scored answers and explanations
-- Authentication (email/password) via Supabase
 
 ## How it works
 
 ```
 App
- AuthProvider (Supabase auth + progress state)
+ ProgressProvider (progress state, saved to localStorage)
   SubjectTabs (top nav: Calc BC / Physics / CS / APUSH)
    UnitSidebar          -- left sidebar, filters by unit
    TopicCard grid       -- main content area
@@ -42,7 +41,7 @@ App
      ApushSheet         -- APUSH detail panel (significance, context, themes, connections)
 ```
 
-All content is static TypeScript data files compiled into the bundle. No server or API calls are made for content. Supabase is used only for auth and storing user progress (starred, reviewed, notes).
+All content is static TypeScript data files compiled into the bundle. No server or API calls are made. User progress (starred, reviewed, notes, practice answers) is saved in the browser with localStorage, so there is no login.
 
 ## Tech stack
 
@@ -56,7 +55,7 @@ All content is static TypeScript data files compiled into the bundle. No server 
 | Code highlighting | react-syntax-highlighter |
 | Graph visualization | force-graph |
 | Math graphing | Mafs |
-| Auth + persistence | Supabase |
+| Persistence | localStorage |
 | Deploy target | Vercel |
 
 ## Getting started
@@ -68,11 +67,6 @@ All content is static TypeScript data files compiled into the bundle. No server 
 git clone <repo-url>
 cd stem-ap-review
 npm install
-
-# Set Supabase credentials (optional -- app works without auth)
-# Create a .env.local file:
-# VITE_SUPABASE_URL=...
-# VITE_SUPABASE_ANON_KEY=...
 
 # Run dev server
 npm run dev
@@ -89,11 +83,11 @@ Open `http://localhost:5173` after running `npm run dev`. Select a subject tab a
 
 ```
 src/
-  App.tsx                   -- root; auth gate
+  App.tsx                   -- root; wraps the app in ProgressProvider
   main.tsx                  -- entry point
   types.ts                  -- Topic type shared by Calc/Physics/CS
   context/
-    AuthContext.tsx          -- auth state, progress tracking, notes
+    ProgressContext.tsx      -- progress tracking, notes, practice answers
   components/
     SubjectTabs.tsx          -- top-level nav and layout
     TopicCard.tsx            -- card in main grid
@@ -122,7 +116,7 @@ src/
     apush-types.ts           -- ApushTopic, ApushCategory, ApushTheme types
     practiceTestMCQ.ts       -- MCQ bank for practice test mode
   lib/
-    supabase.ts              -- Supabase client
+    utils.ts                 -- cn() class name helper
 ```
 
 ## Status
